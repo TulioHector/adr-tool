@@ -1,2 +1,2 @@
-# adt-tool
+# adr-tool
 repository for adr administrations
