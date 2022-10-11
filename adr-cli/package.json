@@ -1,0 +1,21 @@
+{
+  "name": "adr-cli",
+  "version": "1.0.0",
+  "description": "Architecture Decision Records (ADR) command cli",
+  "main": "index.js",
+  "type": "module",
+  "author": "Héctor Abraham Romano, <hector_romano@hotmail.com>",
+  "license": "MIT",
+  "keywords":[
+    "cli",
+    "javascript"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "chalk": "^5.1.0",
+    "figlet": "^1.5.2",
+    "inquirer": "^9.1.2"
+  }
+}
