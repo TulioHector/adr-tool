@@ -4,18 +4,32 @@
   "description": "Architecture Decision Records (ADR) command cli",
   "main": "index.js",
   "type": "module",
-  "author": "Héctor Abraham Romano, <hector_romano@hotmail.com>",
+  "author": "Héctor Abraham Romano, https://github.com/TulioHector",
+  "homepage": "https://github.com/TulioHector/adr-tool/",
   "license": "MIT",
-  "keywords":[
-    "cli",
-    "javascript"
+  "keywords": [
+    "adr",
+    "decision record",
+    "any decision record",
+    "architectural decision",
+    "architectural decision record",
+    "architecture decision",
+    "architecture decision record"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "chalk": "^5.1.0",
+    "commander": "^9.4.1",
     "figlet": "^1.5.2",
     "inquirer": "^9.1.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TulioHector/adr-tool.git"
+  },
+  "bugs": {
+    "url": "https://github.com/TulioHector/adr-tool/issues"
   }
 }
