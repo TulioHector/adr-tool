@@ -1,0 +1,8 @@
+{
+    "repositories": [
+        {"url":"https://api.github.com/repos/OWNER/REPO/contents/PATH", "token":"access_token"},
+        {"url": "https://api.github.com/repos/OWNER/REPO/contents/PATH", "token":"access_token"
+    }
+    ],
+    "titleWebPage": "Titulo del web page repositorio"
+}

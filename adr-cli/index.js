@@ -18,7 +18,11 @@ const msn = msn => {
     horizontalLayout: 'default',
     verticalLayout: 'default'
   })));
-}
+};
+
+const displayVersion = displayVersion => {
+  console.log(chalk.bold.cyan(displayVersion));
+};
 
 // Preguntas que se van a realizar y que más tarde usaremos
 const queryParams = () => {
@@ -121,5 +125,6 @@ const createFile = (data) => {
 // IIFE (Immediately Invoked Function Expression)
 (async() => {
   msn('ADR-CLI');
+  displayVersion('Version 0.0.1 \nAuthor: Hector Romano');
   createFile(await queryParams());
 })();
