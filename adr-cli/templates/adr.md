@@ -1,6 +1,6 @@
 # $shortTitle
 
-* <mark>Status: proposed</mark>
+* Status: $\color{tomato}{proposed}$
 * Date: 2022-10-13
 
 ## Context and Problem Statement
