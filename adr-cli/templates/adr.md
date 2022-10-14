@@ -1,6 +1,6 @@
 # $shortTitle
 
-* Status: proposed
+* <mark>Status: proposed</mark>
 * Date: 2022-10-13
 
 ## Context and Problem Statement
