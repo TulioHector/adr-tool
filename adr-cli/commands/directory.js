@@ -1,4 +1,5 @@
 import chalk from 'chalk';
+import table from 'cli-table3';
 const pathBase = process.cwd();
 import fs from 'fs';
 
@@ -17,10 +18,21 @@ export const getMostRecentFile = (dir) => {
 };
 
 export default function displayDirectory(dir) {
+    let tableFiles = new table({
+        head: ['Id', 'File Name', 'Status']
+    });
     let path = `${pathBase}\\${dir}`;
     let lastAdrCreate = getMostRecentFile(path);
     lastAdrCreate.forEach(file => {
-        console.log(file), "estoy aqui?";
+        let seq = Number(file.substring(0, 4));
+        let seqPadding = seq.toString().padStart(4, '0');
+        tableFiles.push([
+            seqPadding,
+            file,
+            'status'
+        ]);
+        
     });
+    console.log(tableFiles.toString());
 }
 

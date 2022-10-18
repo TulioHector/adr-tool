@@ -37,12 +37,8 @@ const getSequences = (str) => {
     if (str === undefined)
       str = "0000";
     let seq = Number(str.substring(0, 4));// get 4 first char`s and convert to number; je: 9999
-    let newSeq = seq + 1;
 
-    if (newSeq > 9999)
-      throw 'Max ADR sequences reached';
-
-    return newSeq.toString().padStart(4, '0');
+    return seq.toString().padStart(4, '0');
   } catch (error) {
     console.error(chalk.red.bold("Error in parse next sequence to adr file:" + error));
     process.exit();

@@ -5,7 +5,7 @@ import figlet from 'figlet';
 import { Command, Option } from 'commander';
 import displayDirectory from './commands/directory.js'
 import createAdrIndex from './commands/indexingadr.js';
-import { createFileImediatly, queryParams, createFile } from './commands/adr.js';
+import { createFileImediatly, queryParams, createFile, setStatusToAdr } from './commands/adr.js';
 import Conf from 'conf';
 const config = new Conf();
 const program = new Command();
@@ -65,11 +65,14 @@ const errorColor = (str) => {
 
   program
     .command('status')
-    .description('Modify the status an ADR by id. The status chooice: proposal, acceptance, rejection, deprecation, superseding')
+    .description('Modify the status an ADR by id. The status chooice: proposed, acceptance, rejection, deprecation, superseding')
     .argument('[id]', 'Default "0', setDefaultStatus, '0')
-    .option('-s,--status <new_status>', 'Set or change status for adr.')
-    .action((id, status) => {
-      console.log("entre a action status con id: ", id, "ccon estatus ", status);
+    .option('-s,--status <new_status>', 'Set or change status for adr. The status chooice: proposed, acceptance, rejection, deprecation, superseding')
+    .action((id, data) => {
+      let newStatus = data.status;
+      let idAdr = parseInt(id, newStatus);
+      setStatusToAdr(idAdr, newStatus) ;
+      console.log("entre a action status con id: ", id, "ccon estatus ", newStatus);
       process.exit();
   });
 
@@ -78,7 +81,6 @@ const errorColor = (str) => {
     .description('Show list of ADR files. For default is "doc/adr" in relative directory.')
     .action(() => {
       let dir = config.get('adr-path');
-      //console.log("Este es el valor por defecto Tito:", dir);
       displayDirectory(dir);
       process.exit();
   });
