@@ -1,11 +1,11 @@
-# $shortTitle
+# nuevo adr
 
 * Status: $\color{DodgerBlue}{proposal}$
 * Date: 2022-10-13
 
 ## Context and Problem Statement
 
-$contextDescription
+{Describe the context and problem statement, e.g., in free form using two to three sentences or in the form of an illustrative story. You may want to articulate the problem in form of a question and add links to collaboration boards or issue management systems.}
 
 
 <!-- This is an optional element. Feel free to remove. -->

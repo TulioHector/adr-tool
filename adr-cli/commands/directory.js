@@ -11,17 +11,16 @@ const orderReccentFiles = (dir) => {
 };
 
 //{ file: 'db-2020-08-03-12:13.sql', mtime: 2020-08-03T16:13:46.000Z }
-const getMostRecentFile = (dir) => {
+export const getMostRecentFile = (dir) => {
     let files = orderReccentFiles(dir);
     return files.length ? files : undefined;
 };
 
 export default function displayDirectory(dir) {
-    const path = `${pathBase}\\${dir}`;
+    let path = `${pathBase}\\${dir}`;
     let lastAdrCreate = getMostRecentFile(path);
     lastAdrCreate.forEach(file => {
-        console.log(file);
+        console.log(file), "estoy aqui?";
     });
-    process.exit();
 }
 

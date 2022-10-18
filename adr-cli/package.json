@@ -22,8 +22,10 @@
   "dependencies": {
     "chalk": "^5.1.0",
     "commander": "^9.4.1",
+    "conf": "^10.2.0",
     "figlet": "^1.5.2",
-    "inquirer": "^9.1.2"
+    "inquirer": "^9.1.2",
+    "markdown-table": "^3.0.2"
   },
   "repository": {
     "type": "git",

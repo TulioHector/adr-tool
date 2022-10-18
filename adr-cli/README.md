@@ -12,13 +12,32 @@ npm install -g adr-cli
 
 ## Propiedades del CLI
 ```text
-Usage: adr-cli [options]
+Usage: index [options] [command]
 
 Options:
   -n, --new <string>  New ADR name
+  -i, --index         Create index file into document directory. Considering the relative directory in which it is located.
+  -s, --status        Change status of ADR (choices: "proposed", "acceptance", "rejection", "deprecation", "superseding")
   -h, --help          display help for command
+
+Commands:
+  show [dirs]         Show list of ADR files. For default is "doc/adr" in relative directory.
+  config [options]    Command to configure properties for the cli.
   ```
 
   ## Uso
   ### Ejemplo
   
+
+## Estados ADR
+
+Los estados posibles son los siguientes:
+
+| Estado      |   Color                               |
+| :---------- | :-----------------------------------: |
+| proposed    | $\color{DodgerBlue}{proposed}$        |
+| acceptance  | $\color{MediumSeaGreen}{acceptance}$  |
+| rejection   | $\color{Tomato}{rejection}$           |
+| deprecation | $\color{Orange}{deprecation}$         |
+| superseding | $\color{Violet}{superseding}$         |
+

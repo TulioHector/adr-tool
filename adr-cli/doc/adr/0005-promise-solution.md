@@ -1,11 +1,11 @@
-# $shortTitle
+# promise solution
 
 * Status: $\color{DodgerBlue}{proposal}$
 * Date: 2022-10-13
 
 ## Context and Problem Statement
 
-$contextDescription
+sladifjsodihorhek2345ol345t o  sdnvasodnajhn5t2
 
 
 <!-- This is an optional element. Feel free to remove. -->
