@@ -1,12 +1,17 @@
 const pathBase = process.cwd();
 import fs from 'fs';
 import chalk from 'chalk';
-import { markdownTable } from 'markdown-table'
+import { markdownTable } from 'markdown-table';
+import Conf from 'conf';
+const config = new Conf();
+
+let basePath = config.get('adr-path');
 
 export default function createAdrIndex() {
-  const fileArr = [['ADR', 'Name', 'Status']];
-  let pathdir = `${pathBase}\\doc`;
-  let path = `${pathdir}\\adr`;
+  let splitPath = basePath.split("\\");
+  let fileArr = [['ADR', 'Name', 'Status']];
+  let pathdir = `${pathBase}\\${splitPath[0]}`;
+  let path = `${pathdir}\\${splitPath[1]}`;
   let table = "";
   fs.readdirSync(path).forEach(file => {
     let seq = getSequences(file);
@@ -24,9 +29,9 @@ function validateOrCreateIndex(path, table) {
     let templateIndedx = fs.readFileSync('./templates/index.md', { encoding: 'utf8', flag: 'r' });    
     let result = templateIndedx.replace(/<!--MakrToAppendFiles>/g, table);
     fs.writeFileSync(`${path}\\index.md`, result, { mode: 0o777 });
-    console.log(chalk.yellowBright("Index file generated successfully."));
+    console.log(chalk.green("Index file generated successfully."));
   } catch (err) {
-    console.error(err);;
+    console.error(chalk.red.bold(err));
     process.exit();
   }
 }

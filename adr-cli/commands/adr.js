@@ -1,5 +1,4 @@
 import chalk from 'chalk';
-import figlet from 'figlet';
 import inquirer from 'inquirer';
 import enums from '../utils/enums.js';
 const pathBase = process.cwd();
@@ -52,9 +51,6 @@ const getFileNameById = (id) => {
 };
 
 const setStatusToFileAdr = (fileName, status) => {
-  //let adr = fs.readFileSync(fileName, { encoding: 'utf8', flag: 'r' });
-  //adr = adr.replace('$shortTitle', status);
-
   fs.readFile(fileName, 'utf8', function (err, data) {
     let searchString = '* Status:';
     let re = new RegExp('^.*' + searchString + '.*$', 'gm');
@@ -134,16 +130,14 @@ const getNextSequences = (str) => {
 
 // Método que se encarga de crear el fichero en base a las preguntas realizadas
 export const createFile = (data) => {
-  const path = `${pathBase}\\doc\\adr`;
+  const path = `${pathBase}\\${pathAdr}`;
   let lastAdrCreate = getMostRecentFile(path);
-  console.log("estoy aca ahora createFile", data);
   let seq = "0000";
   if (lastAdrCreate === undefined) {
     console.log(chalk.yellow.bold("Get last file name to geneate sequences."));
     process.exit();
   } else {
     let nameLastAdr = lastAdrCreate[lastAdrCreate.length - 1];
-    console.log(lastAdrCreate, nameLastAdr);
     seq = getNextSequences(nameLastAdr);
   }
 
@@ -157,7 +151,7 @@ export const createFile = (data) => {
     templateAdr = templateAdr.replace('$contextDescription', checkContextValid(data.contextDescription));
     fs.writeFileSync(file, templateAdr, { mode: 0o777 });
   } catch (err) {
-    console.error(err);
+    console.error(chalk.red.bold(err));
     process.exit();
   } finally {
     console.log(`
@@ -172,7 +166,7 @@ export const createFile = (data) => {
 }
 
 export const createFileImediatly = (data) => {
-  let path = `${pathBase}\\doc\\adr`;
+  let path = `${pathBase}\\${pathAdr}`;
   let lastAdrCreate = getMostRecentFile(path);
 
   let seq = "0000";
@@ -195,7 +189,7 @@ export const createFileImediatly = (data) => {
     templateAdr = templateAdr.replace('$contextDescription', checkContextValid());
     fs.writeFileSync(file, templateAdr, { mode: 0o777 });
   } catch (err) {
-    console.error(err);
+    console.error(chalk.red.bold(err));
     process.exit();
   } finally {
     console.log(`
@@ -207,4 +201,4 @@ export const createFileImediatly = (data) => {
       `);
     process.exit();
   }
-}
+};

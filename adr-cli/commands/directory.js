@@ -1,4 +1,3 @@
-import chalk from 'chalk';
 import table from 'cli-table3';
 const pathBase = process.cwd();
 import fs from 'fs';
