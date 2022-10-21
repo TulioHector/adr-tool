@@ -2,6 +2,7 @@
 
 import chalk from 'chalk';
 import figlet from 'figlet';
+import packageJson from './package.json' assert { type: "json" };
 import { Command } from 'commander';
 import displayDirectory from './commands/directory.js'
 import createAdrIndex from './commands/indexingadr.js';
@@ -11,7 +12,6 @@ import validateConfigSchema from './utils/schemas.js';
 import Conf from 'conf';
 const config = new Conf();
 const program = new Command();
-
 
 //create file if is not exist and set adr path
 let isExistConfig = CheckConfigFileExistsSync(config.path);
@@ -61,7 +61,7 @@ const errorColor = (str) => {
       outputError: (str, write) => write(errorColor(str))
     })
     .showHelpAfterError(chalk.bold.yellowBright('(add --help for additional information)'))
-    .version(displayVersion('Version 0.1.5 \nAuthor: Hector Romano'), '-v, --version', 'output the current version');
+    .version(displayVersion(`Version ${packageJson.version} \nAuthor: Hector Romano`), '-v, --version', 'output the current version');
 
   program.addHelpText('after', `
 

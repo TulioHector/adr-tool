@@ -1,8 +1,9 @@
 {
   "name": "adr-cli",
-  "version": "1.0.0",
+  "version": "1.0.12",
   "description": "Architecture Decision Records (ADR) command cli",
   "main": "index.js",
+  "bin": "./index.js",
   "type": "module",
   "author": "Héctor Abraham Romano, https://github.com/TulioHector",
   "homepage": "https://github.com/TulioHector/adr-tool/",
@@ -17,7 +18,7 @@
     "architecture decision record"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jasmine"
   },
   "dependencies": {
     "ajv": "^8.11.0",
