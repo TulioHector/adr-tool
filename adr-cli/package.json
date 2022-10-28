@@ -1,9 +1,9 @@
 {
   "name": "adr-cli",
-  "version": "1.0.12",
+  "version": "1.0.15",
   "description": "Architecture Decision Records (ADR) command cli",
-  "main": "index.js",
-  "bin": "./index.js",
+  "main": "dist/index.js",
+  "bin": "./dist/index.js",
   "type": "module",
   "author": "Héctor Abraham Romano, https://github.com/TulioHector",
   "homepage": "https://github.com/TulioHector/adr-tool/",
@@ -18,9 +18,13 @@
     "architecture decision record"
   ],
   "scripts": {
-    "test": "jasmine"
+    "build": "npx tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "@types/figlet": "^1.5.5",
+    "@types/inquirer": "^9.0.2",
+    "@types/node": "^18.11.7",
     "ajv": "^8.11.0",
     "chalk": "^5.1.0",
     "cli-table3": "^0.6.3",
@@ -30,7 +34,8 @@
     "inquirer": "^9.1.2",
     "jasmine": "^4.4.0",
     "listr": "^0.14.3",
-    "markdown-table": "^3.0.2"
+    "markdown-table": "^3.0.2",
+    "typescript": "^4.8.4"
   },
   "repository": {
     "type": "git",

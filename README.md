@@ -3,7 +3,7 @@
 
 Un conjunto de herramientas para la administracion del registro de deciciones de arquitectura (ADR Architecture Decision Records).
 
-ADR-CLI
+ADR-CLI (Beta)
 --------
 
 >Una herramienta de linea de comando para crear y guardar las ADRs
