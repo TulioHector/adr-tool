@@ -15,19 +15,28 @@ Generar el registro de las deciciones de arquitectura (ADR).
 npm install -g adr-cli
 ```
 
+For more information go to npmjs [adr-cli](https://www.npmjs.com/package/adr-cli).
+
 ## Propiedades del CLI
 ```text
-Usage: index [options] [command]
+Usage: adr-cli [options] [command]
+
+Architecrture Decision Recored
 
 Options:
-  -n, --new <string>  New ADR name
-  -i, --index         Create index file into document directory. Considering the relative directory in which it is located.
-  -s, --status        Change status of ADR (choices: "proposed", "acceptance", "rejection", "deprecation", "superseding")
-  -h, --help          display help for command
+  -v, --version   output the current version
+  -h, --help      display help for command
 
 Commands:
-  show [dirs]         Show list of ADR files. For default is "doc/adr" in relative directory.
-  config [options]    Command to configure properties for the cli.
+  new [title]     Create a new ADR file into document directory. Considering the relative directory in which it is located.
+  index           Create index file into document directory. Considering the relative directory in which it is located.
+  config          Command to configure properties for the cli.
+  help [command]  display help for command
+
+
+    Example call config:
+      $ adr-cli config get adr-path"
+      $ adr-cli config set adr-path="<new_path>"
   ```
 
   ## Uso

@@ -5,6 +5,8 @@
   "main": "dist/index.js",
   "bin": "./dist/index.js",
   "type": "module",
+  "types": "./dist/Index.d.ts",
+  "typings": "dist/index",
   "author": "Héctor Abraham Romano, https://github.com/TulioHector",
   "homepage": "https://github.com/TulioHector/adr-tool/",
   "license": "MIT",
@@ -19,7 +21,10 @@
   ],
   "scripts": {
     "build": "npx tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prepublishOnly": "npm run compile",
+    "compile": "tsc -p .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rm -rf dist"
   },
   "dependencies": {
     "@types/figlet": "^1.5.5",
@@ -43,5 +48,11 @@
   },
   "bugs": {
     "url": "https://github.com/TulioHector/adr-tool/issues"
-  }
+  },
+  "files": [
+    "dist/index.js",
+    "dist/index.d.ts",
+    "dist/logic",
+    "dist/utils"
+  ]
 }
