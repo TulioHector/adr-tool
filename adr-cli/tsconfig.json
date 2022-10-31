@@ -10,8 +10,6 @@
       "moduleResolution": "node"
     },
     "include": [
-      "src/logic/**/*.ts",
-      "src/utils/**/*.ts",
-      "src/index.ts"
+      "src/**/*"
     ]
   }

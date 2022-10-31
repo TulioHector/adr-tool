@@ -1,5 +1,8 @@
 # TITULO DOS
 
+* Status: $\color{DodgerBlue}{proposal}$
+* Date: 2022-10-13
+
 ## Context and Problem Statement
 
 sdlfkhnwoeith243524

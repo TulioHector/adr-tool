@@ -5,14 +5,14 @@ import { Command } from 'commander';
 import Conf from 'conf';
 import { Banner } from './utils/banner.js';
 import { Utils } from './utils/utils.js';
-import { Adr } from './logic/adr.js';
-import { Schemas } from './utils/schemas.js'
+import { Adr, Status } from './logic/adr.js';
+import { Directory } from './logic/Directory.js';
+import { Schemas } from './utils/schemas.js';
 const config = new Conf();
 const program = new Command();
 
-
 Banner.SetBanner('ADR-CLI');
-console.log(Banner.DisplayVersion());
+
 program
     .name('adr-cli')
     .description('Architecrture Decision Recored')
@@ -59,12 +59,37 @@ program.command('index')
         process.exit();
     });
 
+program
+    .command('show')
+    .description('Show list of ADR files. For default is "doc/adr" in relative directory.')
+    .action(() => {
+        let dir: string = config.get('adr-path') as string;
+        Directory.displayDirectory(dir);
+    });
+
+program
+    .command('status')
+    .description('Modify the status an ADR by id. The status chooice: proposed, acceptance, rejection, deprecation, superseding')
+    .argument('[id]', 'Default "0', Status.setDefaultStatus, '0')
+    .option('-s,--status <new_status>', 'Set or change status for adr. The status chooice: proposed, acceptance, rejection, deprecation, superseding')
+    .action((id, data) => {
+        let newStatus = data.status;
+        let idAdr = parseInt(id);
+        console.log("entre a action status con id: ", id, "ccon estatus ", newStatus);
+        if(newStatus === undefined){
+            Status.GetStatus().then((answers: any)=>{
+                Status.setStatusToAdr(idAdr, answers.status);
+            });
+        }else{
+            Status.setStatusToAdr(idAdr, newStatus);
+        }
+    });
+
 let configCmd = program
     .command('config')
     .description('Command to configure properties for the cli.')
     .action((options) => {
         console.log(`new path for adrs is ${options.doc}`);
-        //process.exit();
     });
 configCmd
     .command('get')
@@ -75,7 +100,6 @@ configCmd
             let nameCfg = config.get(name);
             if (nameCfg === undefined) {
                 console.error(chalk.red("Propertiy is undefined."));
-                //process.exit();
             }
             console.log(chalk.greenBright(`Value to property is: ${nameCfg}`));
         }

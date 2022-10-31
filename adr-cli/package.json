@@ -1,6 +1,6 @@
 {
   "name": "adr-cli",
-  "version": "1.0.15",
+  "version": "1.0.17",
   "description": "Architecture Decision Records (ADR) command cli",
   "main": "dist/index.js",
   "bin": "./dist/index.js",
@@ -20,10 +20,10 @@
     "architecture decision record"
   ],
   "scripts": {
-    "build": "npx tsc",
-    "prepublishOnly": "npm run compile",
-    "compile": "tsc -p .",
+    "build": "tsc && npm run copyTemplate",
+    "prepublishOnly": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "copyTemplate": "copyfiles -u 1 src/templates/*.md dist",
     "clean": "rm -rf dist"
   },
   "dependencies": {
@@ -37,7 +37,6 @@
     "conf": "^10.2.0",
     "figlet": "^1.5.2",
     "inquirer": "^9.1.2",
-    "jasmine": "^4.4.0",
     "listr": "^0.14.3",
     "markdown-table": "^3.0.2",
     "typescript": "^4.8.4"
@@ -53,6 +52,10 @@
     "dist/index.js",
     "dist/index.d.ts",
     "dist/logic",
-    "dist/utils"
-  ]
+    "dist/utils",
+    "dist/templates"
+  ],
+  "devDependencies": {
+    "copyfiles": "^2.4.1"
+  }
 }

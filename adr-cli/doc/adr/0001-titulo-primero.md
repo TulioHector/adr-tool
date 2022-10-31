@@ -1,5 +1,8 @@
 # Titulo primero
 
+* Status: $\color{DodgerBlue}{proposal}$
+* Date: 2022-10-13
+
 ## Context and Problem Statement
 
 constexto de la solcunion
