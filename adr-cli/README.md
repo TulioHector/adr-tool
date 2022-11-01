@@ -24,14 +24,16 @@ Usage: adr-cli [options] [command]
 Architecrture Decision Recored
 
 Options:
-  -v, --version   output the current version
-  -h, --help      display help for command
+  -v, --version          output the current version
+  -h, --help             display help for command
 
 Commands:
-  new [title]     Create a new ADR file into document directory. Considering the relative directory in which it is located.
-  index           Create index file into document directory. Considering the relative directory in which it is located.
-  config          Command to configure properties for the cli.
-  help [command]  display help for command
+  new [title]            Create a new ADR file into document directory. Considering the relative directory in which it is located.
+  index                  Create index file into document directory. Considering the relative directory in which it is located.
+  show                   Show list of ADR files. For default is "doc/adr" in relative directory.
+  status [options] [id]  Modify the status an ADR by id. The status chooice: proposed, acceptance, rejection, deprecation, superseding
+  config                 Command to configure properties for the cli.
+  help [command]         display help for command
 
 
     Example call config:

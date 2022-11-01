@@ -8,8 +8,18 @@ import { Utils } from './utils/utils.js';
 import { Adr, Status } from './logic/adr.js';
 import { Directory } from './logic/Directory.js';
 import { Schemas } from './utils/schemas.js';
-const config = new Conf();
+import { Configuration } from './utils/configurations.js';
+const config = new Conf({
+    projectName: 'adr-cli',
+    projectVersion: '0.1.17'
+});
 const program = new Command();
+
+//create file if is not exist and set adr path
+let isExistConfig = Configuration.CheckConfigFileExistsSync(config.path);
+if (!isExistConfig) {
+  config.set('adr-path', "doc\\adr");
+}
 
 Banner.SetBanner('ADR-CLI');
 
