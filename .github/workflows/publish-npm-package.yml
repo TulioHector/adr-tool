@@ -4,15 +4,12 @@ on: [push]
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
-    env:
-      working-directory: ./adr-cli
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: 12
       - run: npm install
-        working-directory: ${{env.working-directory}}
       - uses: JS-DevTools/npm-publish@v1
         with:
             token: ${{ secrets.NPM_TOKEN }}
