@@ -6,7 +6,7 @@ import Conf from 'conf';
 import { Banner } from './utils/banner.js';
 import { Utils } from './utils/utils.js';
 import { Adr, Status } from './logic/adr.js';
-import { Directory } from './logic/Directory.js';
+import { Directory } from './logic/directory.js';
 import { Schemas } from './utils/schemas.js';
 import { Configuration } from './utils/configurations.js';
 const config = new Conf({
