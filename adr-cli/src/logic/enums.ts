@@ -1,4 +1,3 @@
-
 export class Enums {
     public static StatusColor = {
         proposed: "$\color{DodgerBlue}{proposed}$",

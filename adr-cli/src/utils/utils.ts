@@ -1,4 +1,3 @@
-
 export class Utils {
     public static ErrorColor(str:string) {
         // Add ANSI escape codes to display text in red.

@@ -2,24 +2,18 @@
 
 import chalk from 'chalk';
 import { Command } from 'commander';
-import Conf from 'conf';
 import { Banner } from './utils/banner.js';
 import { Utils } from './utils/utils.js';
 import { Adr, Status } from './logic/adr.js';
 import { Directory } from './logic/directory.js';
 import { Schemas } from './utils/schemas.js';
 import { Configuration } from './utils/configurations.js';
-const config = new Conf({
-    projectName: 'adr-cli',
-    projectVersion: '0.1.17'
-});
-const program = new Command();
 
-//create file if is not exist and set adr path
-let isExistConfig = Configuration.CheckConfigFileExistsSync(config.path);
-if (!isExistConfig) {
-  config.set('adr-path', "doc\\adr");
-}
+const config = new Configuration({
+    "adr-path": "doc\\adr"
+});
+
+const program = new Command();
 
 Banner.SetBanner('ADR-CLI');
 
@@ -73,7 +67,7 @@ program
     .command('show')
     .description('Show list of ADR files. For default is "doc/adr" in relative directory.')
     .action(() => {
-        let dir: string = config.get('adr-path') as string;
+        let dir: string = config.Get('adr-path') as string;
         Directory.displayDirectory(dir);
     });
 
@@ -107,7 +101,7 @@ configCmd
     .description('Command to get properties value.')
     .action((name) => {
         if (name !== undefined) {
-            let nameCfg = config.get(name);
+            let nameCfg = config.Get(name);
             if (nameCfg === undefined) {
                 console.error(chalk.red("Propertiy is undefined."));
             }
@@ -124,15 +118,15 @@ configCmd
         console.log(name);
         if (name !== undefined) {
             let parsePropertie: string[] = name.split('=');
-            let prop: any = {};
+            let prop: Record<string, any> = {};
             prop[parsePropertie[0]] = parsePropertie[1];
 
             let chk = Schemas.validateConfigSchema(prop);
             if (!chk)
                 process.exit();
 
-            config.set(parsePropertie[0], parsePropertie[1]);
-            let newProp = config.get("adr-path");
+            config.Set(parsePropertie[0], parsePropertie[1]);
+            let newProp = config.Get("adr-path");
             console.log(chalk.greenBright.bold(`Propertie ${parsePropertie[0]} changed to: ${newProp}`));
         }
         console.log(chalk.redBright.bold(`Property not found. Please check the help.`));

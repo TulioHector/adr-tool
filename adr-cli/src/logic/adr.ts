@@ -6,8 +6,8 @@ import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync } from 
 import { markdownTable } from 'markdown-table';
 import { Directory } from './directory.js';
 import { Enums } from './enums.js';
-import Conf from 'conf';
-const config = new Conf();
+import { Configuration } from '../utils/configurations.js';
+const config = new Configuration();
 const pathBase = process.cwd();
 
 const __filename = fileURLToPath(import.meta.url);
@@ -15,7 +15,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export class Adr {
-    private static pathAdr = config.get('adr-path');
+    private static pathAdr = config.Get('adr-path');
 
     public static GetQuestionsToAdd(): any {
         return Add.QuestionsForAdd();
@@ -76,7 +76,7 @@ export class Adr {
 }
 
 export class Status {
-    private static pathAdr = config.get('adr-path');
+    private static pathAdr = config.Get('adr-path');
 
     private static ChoiceStatus() {
         let choice = [
@@ -114,13 +114,13 @@ export class Status {
     };
 
     private static setStatusToFileAdr(fileName: string, status: string) {
-        console.log(fileName, status);
+        //console.log(fileName, status);
         let file = readFileSync(fileName, { encoding: 'utf8', flag: 'r' });
         let searchString = '* Status:';
         let re = new RegExp(`^.*\\${searchString}.*$`, 'gm');
         let colorStatus = this.setStatusColor(status);
         let formatted = file.replace(re, colorStatus);
-        console.log(re.test(file), re);
+        //console.log(re.test(file), re);
         writeFileSync(fileName, formatted, { mode: 0o777 });
     }
 
@@ -179,7 +179,7 @@ export class Status {
 export class Add {
     // Template que usaremos para la creación del contenido del fichero
     private static templateAdr = readFileSync(`${__dirname}\\..\\templates\\adr.md`, { encoding: 'utf8', flag: 'r' });
-    private static pathAdr = config.get('adr-path');
+    private static pathAdr = config.Get('adr-path');
 
     public static QuestionsForAdd() {
         let qs = [{
