@@ -1,6 +1,6 @@
 {
   "name": "adr-cli",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "preferGlobal": true,
   "description": "Architecture Decision Records (ADR) command cli",
   "main": "dist/index.js",
@@ -36,7 +36,6 @@
     "cli-table3": "^0.6.3",
     "commander": "^9.4.1",
     "figlet": "^1.5.2",
-    "global-modules": "^2.0.0",
     "inquirer": "^9.1.2",
     "listr": "^0.14.3",
     "markdown-table": "^3.0.2"
@@ -53,7 +52,8 @@
     "dist/index.d.ts",
     "dist/logic",
     "dist/utils",
-    "dist/templates"
+    "dist/templates",
+    "dist/config"
   ],
   "devDependencies": {
     "@types/figlet": "^1.5.5",
