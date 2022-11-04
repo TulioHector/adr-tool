@@ -9,9 +9,11 @@ import { Directory } from './logic/directory.js';
 import { Schemas } from './utils/schemas.js';
 import { Configuration } from './utils/configurations.js';
 
-const config = new Configuration({
-    "adr-path": "doc\\adr"
-});
+// const config = new Configuration({
+//     "adr-path": "doc\\adr"
+// });
+
+const config = new Configuration();
 
 const program = new Command();
 
@@ -80,11 +82,11 @@ program
         let newStatus = data.status;
         let idAdr = parseInt(id);
         console.log("entre a action status con id: ", id, "ccon estatus ", newStatus);
-        if(newStatus === undefined){
-            Status.GetStatus().then((answers: any)=>{
+        if (newStatus === undefined) {
+            Status.GetStatus().then((answers: any) => {
                 Status.setStatusToAdr(idAdr, answers.status);
             });
-        }else{
+        } else {
             Status.setStatusToAdr(idAdr, newStatus);
         }
     });
@@ -106,37 +108,49 @@ configCmd
                 console.error(chalk.red("Propertiy is undefined."));
             }
             console.log(chalk.greenBright(`Value to property is: ${nameCfg}`));
+        } else {
+            console.log(chalk.redBright.bold(`Property not found. Please check the help.`));
+            program.outputHelp();
         }
-        console.log(chalk.redBright.bold(`Property not found. Please check the help.`));
-        program.outputHelp();
     });
 configCmd
     .command('set')
     .argument('<name>', 'Name of propertiy to setitng: propertiy=value')
     .description('Command to set propertie value.')
     .action((name) => {
-        console.log(name);
         if (name !== undefined) {
             let parsePropertie: string[] = name.split('=');
             let prop: Record<string, any> = {};
             prop[parsePropertie[0]] = parsePropertie[1];
 
             let chk = Schemas.validateConfigSchema(prop);
-            if (!chk)
+            if (!chk) {
+                console.log(chalk.greenBright.bold(`Property entered, ${parsePropertie[0]}, is not valid into the schema. Please tried again.`));
                 process.exit();
-
+            }
+            console.log("Voy a hacer el set!!");
             config.Set(parsePropertie[0], parsePropertie[1]);
             let newProp = config.Get("adr-path");
             console.log(chalk.greenBright.bold(`Propertie ${parsePropertie[0]} changed to: ${newProp}`));
+        } else {
+            console.log(chalk.redBright.bold(`Property not found. Please check the help.`));
+            program.outputHelp();
         }
-        console.log(chalk.redBright.bold(`Property not found. Please check the help.`));
-        program.outputHelp();
     });
 configCmd
     .command('path')
     .description('Command to get the folder where is the config file for adr-tools.')
     .action(() => {
         console.log(`Configuration file create in this folder: ${chalk.cyan.bold(config.path)}`);
+    });
+configCmd
+    .command('reset')
+    .description('Command to reset or regenerate the config file for defaults.')
+    .action(() => {
+        config.SetDefaultValues({
+            "adr-path": "doc\\adr"
+        });
+        console.log(`CConfigurations file reset successfully in this folder: ${chalk.cyan.bold(config.path)}`);
     });
 
 program.parse(process.argv);

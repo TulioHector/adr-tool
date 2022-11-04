@@ -12,7 +12,7 @@
   "typings": "dist/index",
   "author": "Héctor Abraham Romano, https://github.com/TulioHector",
   "homepage": "https://github.com/TulioHector/adr-tool/",
-  "license": "MIT",
+  "license": "GPL-3.0-only",
   "keywords": [
     "adr",
     "decision record",
