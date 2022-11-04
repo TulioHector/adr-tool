@@ -1,12 +1,13 @@
+import {readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync} from 'node:fs';
+import {fileURLToPath} from 'node:url';
+import path from 'node:path';
 import chalk from 'chalk';
 import inquirer from 'inquirer';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync } from 'fs';
-import { markdownTable } from 'markdown-table';
-import { Directory } from './directory.js';
-import { Enums } from './enums.js';
-import { Configuration } from '../utils/configurations.js';
+import {markdownTable} from 'markdown-table';
+import {Configuration} from '../utils/configurations.js';
+import {Directory} from './directory.js';
+import {Enums} from './enums.js';
+
 const config = new Configuration();
 const pathBase = process.cwd();
 

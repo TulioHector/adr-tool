@@ -3,6 +3,7 @@
 [![NPM Downloads](https://img.shields.io/npm/dm/adr-cli.svg?style=flat)](https://npmcharts.com/compare/adr-cli?minimal=true)
 [![Install Size](https://packagephobia.com/badge?p=adr-cli)](https://packagephobia.com/result?p=adr-cli)
 [![License](https://img.shields.io/npm/l/adr-cli.svg)](https://github.com/TulioHector/adr-tool/blob/main/adr-cli/package.json)
+[![Package Quality](https://packagequality.com/shield/adr-cli.svg)](https://packagequality.com/#?package=adr-cli)
 
 
 Generar el registro de las deciciones de arquitectura (ADR).
@@ -12,7 +13,7 @@ Generar el registro de las deciciones de arquitectura (ADR).
 
 ## Instalacion
 
-```sh
+```bash
 npm install -g adr-cli
 ```
 
@@ -44,8 +45,8 @@ Commands:
 
 ## New ADR
 ### Command line:
-```sh
-$ adr-cli new -h
+```bash
+ adr-cli new -h
 ```
 Ooutput:
 ```sh
@@ -62,8 +63,8 @@ Options:
 ```
 
 ## Generate Index of ADR`s
-```sh
-$ adr-cli index -h
+```bash
+ adr-cli index -h
 ```
 Ooutput:
 ```sh
@@ -75,8 +76,8 @@ Options:
   -h, --help  display help for command
 ```
 ## Show list of ADR files
-```sh
-$ adr-cli show -h
+```bash
+ adr-cli show -h
 ```
 Ooutput:
 ```sh
@@ -89,8 +90,8 @@ Options:
 ```
 
 ## Show and modify status of ADR
-```sh
-$ adr-cli status -h
+```bash
+ adr-cli status -h
 ```
 Ooutput:
 ```sh
@@ -107,8 +108,8 @@ Options:
 ```
 
 ## Show and modify config settings of adr-cli
-```sh
-$ adr-cli config -h
+```bash
+ adr-cli config -h
 ```
 Ooutput:
 ```sh
