@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 import figlet from 'figlet';
 import { readFileSync } from 'fs';
-const pathBase = process.cwd();
+import { ModulesPath } from './managePath.js';
 
 export class Banner {
   public static SetBanner(msn: string) {
@@ -13,7 +13,7 @@ export class Banner {
   }
 
   public static DisplayVersion(): string {
-    let result = JSON.parse(readFileSync(`${pathBase}\\package.json`, {encoding:'utf8', flag:'r'}));
+    let result = JSON.parse(readFileSync(`${ModulesPath.getInstalledPathSync('adr-cli')}\\package.json`, {encoding:'utf8', flag:'r'}));
     let displayVersion = `Version ${result.version} \nAuthor: Hector Romano`;
     return chalk.bold.cyan(displayVersion);
   };

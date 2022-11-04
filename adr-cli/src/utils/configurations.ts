@@ -10,24 +10,6 @@ export class Configuration {
     private pathFile: string = `${ModulesPath.getInstalledPathSync('adr-cli')}\\dist\\config\\default.json`;
     public path: string = `${ModulesPath.getInstalledPathSync('adr-cli')}\\dist\\config`;
 
-    // constructor(object?: any) {
-    //     console.log("Estoy en el constructor!!");
-    //     //create file if is not exist and set adr path
-    //     let isExistConfig = this.CheckConfigFileExistsSync();
-    //     console.log(isExistConfig);
-    //     if (!isExistConfig) {
-    //         writeFileSync(this.pathFile, "{\"adr-path\":\"doc\\adr\"}", { mode: 0o777 });
-    //     }
-        
-    //     if(object === undefined)
-    //         return;
-        
-    //     let objLength = Object.keys(object).length;
-    //     if (objLength > 0) {
-    //         this.SetDefaultValues(object);
-    //     }
-    // }
-
     public SetDefaultValues(object: any) {
         for (let key in object) {
             let value: any = object[key];
@@ -57,8 +39,6 @@ export class Configuration {
     }
 
     public Set(key: string, value: any) {
-        //let newData: Record<string, any> = {};
-        //newData[key] = value;
         this.jsonFile[key] = value;
         this.saveFile();
     }

@@ -9,10 +9,6 @@ import { Directory } from './logic/directory.js';
 import { Schemas } from './utils/schemas.js';
 import { Configuration } from './utils/configurations.js';
 
-// const config = new Configuration({
-//     "adr-path": "doc\\adr"
-// });
-
 const config = new Configuration();
 
 const program = new Command();
@@ -23,10 +19,7 @@ program
     .name('adr-cli')
     .description('Architecrture Decision Recored')
     .configureOutput({
-        // Visibly override write routines as example!
-        //writeOut: (str) => process.stdout.write(`[OUT] ${str}`),
         writeErr: (str) => process.stdout.write(`[ERR] ${str}`),
-        // Highlight errors in color.
         outputError: (str, write) => write(Utils.ErrorColor(str))
     })
     .showHelpAfterError(chalk.bold.yellowBright('(add --help for additional information)'))
@@ -37,8 +30,6 @@ program.addHelpText('after', `
     Example call config:
       $ adr-cli config get adr-path"
       $ adr-cli config set adr-path="<new_path>"`);
-
-
 
 program.command('new')
     .description('Create a new ADR file into document directory. Considering the relative directory in which it is located.')

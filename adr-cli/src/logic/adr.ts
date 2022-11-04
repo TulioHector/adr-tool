@@ -197,6 +197,7 @@ export class Add {
 
     public static createFile(data: any) {
         let path = `${pathBase}\\${this.pathAdr}`;
+        this.createDirectory(path);
         let lastAdrCreate = Directory.getMostRecentFile(path);
         let seq = "0000";
         if (lastAdrCreate === undefined) {
@@ -233,6 +234,7 @@ export class Add {
 
     public static createFileImediatly(data: any) {
         let path = `${pathBase}\\${this.pathAdr}`;
+        this.createDirectory(path);
         let lastAdrCreate = Directory.getMostRecentFile(path);
 
         let seq = "0000";
@@ -269,6 +271,11 @@ export class Add {
         }
     };
 
+    private static createDirectory(dirname:string){
+        if (!existsSync(dirname)){
+            mkdirSync(dirname, { recursive: true });
+        }
+    }
     //get next sequence in directopry to adr name`s
     private static getNextSequences(str: string): string {
         try {
