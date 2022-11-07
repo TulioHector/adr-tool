@@ -1,16 +1,22 @@
 name: GitHub Publish NPM package
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
-on: [push]
+on:
+  push:
+    branches:
+      - master
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     env:
       working-directory: ./adr-cli
     steps:
+      - name: checkout
       - uses: actions/checkout@v3
+      - name: setup node
       - uses: actions/setup-node@v3
         with:
           node-version: 12
+          registry-utl: https://registry.npmjs.org
       - run: npm install
         working-directory: ${{env.working-directory}}
       - uses: JS-DevTools/npm-publish@v1

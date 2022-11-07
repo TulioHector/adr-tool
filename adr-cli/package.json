@@ -1,6 +1,6 @@
 {
   "name": "adr-cli",
-  "version": "1.0.21",
+  "version": "1.0.22",
   "preferGlobal": true,
   "description": "Architecture Decision Records (ADR) command cli",
   "main": "dist/index.js",
