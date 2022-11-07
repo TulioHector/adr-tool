@@ -18,9 +18,8 @@ jobs:
         with:
           node-version: 12
           registry-utl: https://registry.npmjs.org
-      - run: npm install
+      - name: publish
+      - run: npm publish --access public
         working-directory: ${{env.working-directory}}
-      - uses: JS-DevTools/npm-publish@v1
-        with:
-            token: ${{ secrets.NPM_TOKEN }}
-            package: ./adr-cli/package.json
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
