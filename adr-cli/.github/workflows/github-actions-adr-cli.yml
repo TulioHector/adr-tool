@@ -5,7 +5,8 @@ on:
     branches:
       - master
 jobs:
-  Explore-GitHub-Actions:
+  release:
+    name: publish
     runs-on: ubuntu-latest
     env:
       working-directory: ./adr-cli
