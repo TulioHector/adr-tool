@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [12.x, 14.x]
+        node-version: [16.x]
     env:
       working-directory: ./adr-cli
     steps:
@@ -14,10 +14,10 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          registry-utl: https://registry.npmjs.org/
-      - run: npm install
+          registry-utl: 'https://registry.npmjs.org'
+      - run: npm ci
         working-directory: ${{env.working-directory}}
-      - run: npm publish --access public
+      - run: npm publish
         working-directory: ${{env.working-directory}}
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
