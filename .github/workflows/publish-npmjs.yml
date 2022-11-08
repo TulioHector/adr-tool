@@ -15,6 +15,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           registry-utl: https://registry.npmjs.org
+      - run: npm install
+        working-directory: ${{env.working-directory}}
       - run: npm publish --access public
         working-directory: ${{env.working-directory}}
         env:
