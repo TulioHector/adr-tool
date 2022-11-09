@@ -1,29 +1,32 @@
 #! /usr/bin/env node
 
 import chalk from 'chalk';
-import { Command } from 'commander';
-import { Banner } from './utils/banner.js';
-import { Utils } from './utils/utils.js';
-import { Adr, Status } from './logic/adr.js';
-import { Directory } from './logic/directory.js';
-import { Schemas } from './utils/schemas.js';
-import { Configuration } from './utils/configurations.js';
+import {Command} from 'commander';
+import {Banner} from './utils/banner.js';
+import {Utils} from './utils/utils.js';
+import {Adr, Status} from './logic/adr.js';
+import {Directory} from './logic/directory.js';
+import {Schemas} from './utils/schemas.js';
+import {Configuration} from './utils/configurations.js';
 
 const config = new Configuration();
-
 const program = new Command();
+const adr = new Adr();
+const status = new Status();
+const directory = new Directory();
+const banner = new Banner();
+const utils = new Utils();
 
-Banner.SetBanner('ADR-CLI');
+banner.setBanner('ADR-CLI');
 
 program
     .name('adr-cli')
     .description('Architecrture Decision Recored')
     .configureOutput({
-        writeErr: (str) => process.stdout.write(`[ERR] ${str}`),
-        outputError: (str, write) => write(Utils.ErrorColor(str))
+        writeErr: (string_: string) => process.stdout.write(`[ERR] ${string_}`),
     })
     .showHelpAfterError(chalk.bold.yellowBright('(add --help for additional information)'))
-    .version(Banner.DisplayVersion(), '-v, --version', 'output the current version');
+    .version(banner.displayVersion(), '-v, --version', 'output the current version');
 
 program.addHelpText('after', `
 
@@ -34,99 +37,98 @@ program.addHelpText('after', `
 program.command('new')
     .description('Create a new ADR file into document directory. Considering the relative directory in which it is located.')
     .argument('[title]', 'Name of title for ADR')
-    .action((title) => {
-        let interactive = title === undefined ? true : false;
+    .action(async (title: string) => {
+        const interactive = title === undefined;
         if (interactive) {
-            Adr.GetQuestionsToAdd().then((answers: any) => {
-                console.log(JSON.stringify(answers, null, '  '));
-                Adr.AddWithAnswers(answers);
-            });
+            const questions = await adr.getQuestionsToAdd();
+            adr.addWithAnswers(questions);
         } else {
-            let data = {
-                "shortTitle": title
+            const data: any = {
+                shortTitle: title,
             };
-            Adr.AddWithoutAnswers(data);
+            adr.addWithoutAnswers(data);
         }
     });
 program.command('index')
     .description('Create index file into document directory. Considering the relative directory in which it is located.')
     .action(() => {
-        console.log(chalk.green("Reading ADR`s files to generated Index."));
-        Adr.CreateIndex();
-        process.exit();
+        console.log(chalk.green('Reading ADR`s files to generated Index.'));
+        adr.createIndex();
+        process.exitCode = 1;
     });
 
 program
     .command('show')
     .description('Show list of ADR files. For default is "doc/adr" in relative directory.')
     .action(() => {
-        let dir: string = config.Get('adr-path') as string;
-        Directory.displayDirectory(dir);
+        const dir: string = config.get('adr-path');
+        directory.displayDirectory(dir);
     });
 
 program
     .command('status')
     .description('Modify the status an ADR by id. The status chooice: proposed, acceptance, rejection, deprecation, superseding')
-    .argument('[id]', 'Default "0', Status.setDefaultStatus, '0')
+    .argument('[id]', 'Default "0', status.setDefaultStatus, '0')
     .option('-s,--status <new_status>', 'Set or change status for adr. The status chooice: proposed, acceptance, rejection, deprecation, superseding')
-    .action((id, data) => {
-        let newStatus = data.status;
-        let idAdr = parseInt(id);
-        console.log("entre a action status con id: ", id, "ccon estatus ", newStatus);
+    .action(async (id: string, data: Record<string, string>) => {
+        const newStatus = data.status;
+        const idAdr = Number.parseInt(id, 10);
         if (newStatus === undefined) {
-            Status.GetStatus().then((answers: any) => {
-                Status.setStatusToAdr(idAdr, answers.status);
-            });
+            const answers: Record<string, string> = await status.getStatus();
+            status.setStatusToAdr(idAdr, answers.status);
         } else {
-            Status.setStatusToAdr(idAdr, newStatus);
+            status.setStatusToAdr(idAdr, newStatus);
         }
     });
 
-let configCmd = program
+const configCmd = program
     .command('config')
     .description('Command to configure properties for the cli.')
-    .action((options) => {
+    .action((options: Record<string, string>) => {
         console.log(`new path for adrs is ${options.doc}`);
     });
 configCmd
     .command('get')
     .argument('<name>', 'Name of propertiy to view value.')
     .description('Command to get properties value.')
-    .action((name) => {
+    .action((name: string | undefined) => {
         if (name !== undefined) {
-            let nameCfg = config.Get(name);
+            const nameCfg = config.get(name);
             if (nameCfg === undefined) {
-                console.error(chalk.red("Propertiy is undefined."));
+                console.error(chalk.red('Propertiy is undefined.'));
             }
+
             console.log(chalk.greenBright(`Value to property is: ${nameCfg}`));
-        } else {
-            console.log(chalk.redBright.bold(`Property not found. Please check the help.`));
-            program.outputHelp();
+            process.exit(1);
         }
+
+        console.log(chalk.redBright.bold('Property not found. Please check the help.'));
+        program.outputHelp();
     });
 configCmd
     .command('set')
     .argument('<name>', 'Name of propertiy to setitng: propertiy=value')
     .description('Command to set propertie value.')
-    .action((name) => {
+    .action((name: string | undefined) => {
         if (name !== undefined) {
-            let parsePropertie: string[] = name.split('=');
-            let prop: Record<string, any> = {};
+            const parsePropertie: string[] = name.split('=');
+            const prop: Record<string, any> = {};
             prop[parsePropertie[0]] = parsePropertie[1];
 
-            let chk = Schemas.validateConfigSchema(prop);
+            const chk = Schemas.validateConfigSchema(prop);
             if (!chk) {
                 console.log(chalk.greenBright.bold(`Property entered, ${parsePropertie[0]}, is not valid into the schema. Please tried again.`));
-                process.exit();
+                process.exit(1);
             }
-            console.log("Voy a hacer el set!!");
-            config.Set(parsePropertie[0], parsePropertie[1]);
-            let newProp = config.Get("adr-path");
+
+            config.set(parsePropertie[0], parsePropertie[1]);
+            const newProp = config.get('adr-path');
             console.log(chalk.greenBright.bold(`Propertie ${parsePropertie[0]} changed to: ${newProp}`));
-        } else {
-            console.log(chalk.redBright.bold(`Property not found. Please check the help.`));
-            program.outputHelp();
+            process.exit(1);
         }
+
+        console.log(chalk.redBright.bold('Property not found. Please check the help.'));
+        program.outputHelp();
     });
 configCmd
     .command('path')
@@ -138,8 +140,8 @@ configCmd
     .command('reset')
     .description('Command to reset or regenerate the config file for defaults.')
     .action(() => {
-        config.SetDefaultValues({
-            "adr-path": "doc\\adr"
+        config.setDefaultValues({
+            'adr-path': 'doc\\adr',
         });
         console.log(`CConfigurations file reset successfully in this folder: ${chalk.cyan.bold(config.path)}`);
     });
@@ -147,3 +149,9 @@ configCmd
 program.parse(process.argv);
 const options = program.opts();
 
+function exit() {
+    process.exitCode = 1;
+}
+
+process.on('uncaughtException', exit);
+process.on('SIGINT', exit);

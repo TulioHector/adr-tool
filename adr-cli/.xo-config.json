@@ -1,0 +1,7 @@
+{
+	"rules": {
+        "@typescript-eslint/indent": 0,
+        "n/prefer-global/process": 0,
+        "unicorn/no-process-exit": 0
+      }
+}

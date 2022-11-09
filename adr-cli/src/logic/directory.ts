@@ -1,38 +1,39 @@
-import table from 'cli-table3';
+import * as fs from 'node:fs';
+import Table from 'cli-table3';
+
 const pathBase = process.cwd();
-import * as fs from 'fs';
-
 export class Directory {
-    //{ file: 'db-2020-08-03-12:13.sql', mtime: 2020-08-03T16:13:46.000Z }
-    public static getMostRecentFile(dir: string) {
-        let files = this.orderReccentFiles(dir);
-        return files.length ? files : [];
-    };
+    public getMostRecentFile(dir: string) {
+        const files = this.orderReccentFiles(dir);
+        return files.length > 0 ? files : [];
+    }
 
-    public static orderReccentFiles(dir: string) : string[]{
-        let arrFiles: string[] = [];
-        fs.readdirSync(dir).forEach(file => {
-            arrFiles.push(file);
-        });
-        return arrFiles;
-    };
+    public orderReccentFiles(dir: string): string[] {
+        const arrayFiles: string[] = [];
+        const files = fs.readdirSync(dir);
+        for (const file of files) {
+            arrayFiles.push(file);
+        }
 
-    public static displayDirectory(dir:string) {
-        let tableFiles = new table({
-            head: ['Id', 'File Name', 'Status']
+        return arrayFiles;
+    }
+
+    public displayDirectory(dir: string) {
+        const tableFiles = new Table({
+            head: ['Id', 'File Name', 'Status'],
         });
-        let path = `${pathBase}\\${dir}`;
-        let lastAdrCreate: string[] = this.getMostRecentFile(path);
-        lastAdrCreate.forEach(file => {
-            let seq = Number(file.substring(0, 4));
-            let seqPadding = seq.toString().padStart(4, '0');
+        const path = `${pathBase}\\${dir}`;
+        const lastAdrCreate: string[] = this.getMostRecentFile(path);
+        for (const file of lastAdrCreate) {
+            const seq = Number(file.slice(0, 4));
+            const seqPadding = seq.toString().padStart(4, '0');
             tableFiles.push([
                 seqPadding,
                 file,
-                'status'
+                'status',
             ]);
-            
-        });
+        }
+
         console.log(tableFiles.toString());
     }
 }

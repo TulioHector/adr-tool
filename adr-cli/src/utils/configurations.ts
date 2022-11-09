@@ -8,9 +8,9 @@ export interface OptionsConfig extends Record<string,any>{
 export class Configuration {
     private jsonFile: Record<string, any> = {};
     private pathFile: string = `${ModulesPath.getInstalledPathSync('adr-cli')}\\dist\\config\\default.json`;
-    public path: string = `${ModulesPath.getInstalledPathSync('adr-cli')}\\dist\\config`;
+    public readonly path: string = `${ModulesPath.getInstalledPathSync('adr-cli')}\\dist\\config`;
 
-    public SetDefaultValues(object: any) {
+    public setDefaultValues(object: any) {
         for (let key in object) {
             let value: any = object[key];
             this.jsonFile[key] = value;
@@ -19,7 +19,7 @@ export class Configuration {
         writeFileSync(this.pathFile, newData);
     }
 
-    public CheckConfigFileExistsSync() {
+    public checkConfigFileExistsSync() {
         let flag = true;
         try {
             accessSync(this.pathFile, constants.F_OK);
@@ -29,7 +29,7 @@ export class Configuration {
         return flag;
     }
 
-    public File(path?: string): void {
+    public file(path?: string): void {
         if(path !== undefined){
             this.pathFile = path;
         }
@@ -38,12 +38,12 @@ export class Configuration {
         this.jsonFile = JSON.parse(data);
     }
 
-    public Set(key: string, value: any) {
+    public set(key: string, value: any) {
         this.jsonFile[key] = value;
         this.saveFile();
     }
 
-    public Get(key: string): string {
+    public get(key: string): string {
         let file = readFileSync(this.pathFile, { encoding: 'utf8', flag: 'r' });
         let data = JSON.parse(file);
         return data[key];
