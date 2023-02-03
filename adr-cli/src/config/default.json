@@ -1,1 +1,5 @@
-{"adr-path":"doc\\adr"}
+{
+    "adrPath":"doc\\adr",
+    "locale": "en",
+    "markdownEngine": "github"
+}

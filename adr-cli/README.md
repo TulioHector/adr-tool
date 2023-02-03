@@ -1,4 +1,5 @@
 
+[![CI status](https://github.com/adr-tool/workflows/CI/badge.svg)](https://github.com/adr-tool/actions)
 [![NPM Version](http://img.shields.io/npm/v/adr-cli.svg?style=flat)](https://www.npmjs.com/package/adr-cli)
 [![NPM Downloads](https://img.shields.io/npm/dm/adr-cli.svg?style=flat)](https://npmcharts.com/compare/adr-cli?minimal=true)
 [![Install Size](https://packagephobia.com/badge?p=adr-cli)](https://packagephobia.com/result?p=adr-cli)
@@ -125,6 +126,7 @@ Commands:
   set <name>  Command to set propertie value.
   path        Command to get the folder where is the config file for adr-tools.
   reset       Command to reset or regenerate the config file for defaults.
+  show        Command to show key values of configurations. Properties si case sensitive
 ```
   ### Ejemplo
   

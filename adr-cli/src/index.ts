@@ -8,7 +8,9 @@ import {Adr, Status} from './logic/adr.js';
 import {Directory} from './logic/directory.js';
 import {Schemas} from './utils/schemas.js';
 import {Configuration} from './utils/configurations.js';
+import {Locale} from './utils/locale.js';
 
+const locale = Locale.getInstance().getLocale();
 const config = new Configuration();
 const program = new Command();
 const adr = new Adr();
@@ -31,12 +33,12 @@ program
 program.addHelpText('after', `
 
     Example call config:
-      $ adr-cli config get adr-path"
-      $ adr-cli config set adr-path="<new_path>"`);
+      $ adr-cli config get adrPath"
+      $ adr-cli config set adrPath="<new_path>"`);
 
 program.command('new')
-    .description('Create a new ADR file into document directory. Considering the relative directory in which it is located.')
-    .argument('[title]', 'Name of title for ADR')
+    .description(locale.command.new.program.descriptions)
+    .argument('[title]', locale.command.new.program.arguments)
     .action(async (title: string) => {
         const interactive = title === undefined;
         if (interactive) {
@@ -50,26 +52,25 @@ program.command('new')
         }
     });
 program.command('index')
-    .description('Create index file into document directory. Considering the relative directory in which it is located.')
+    .description(locale.command.index.program.descriptions)
     .action(() => {
-        console.log(chalk.green('Reading ADR`s files to generated Index.'));
         adr.createIndex();
         process.exitCode = 1;
     });
 
 program
     .command('show')
-    .description('Show list of ADR files. For default is "doc/adr" in relative directory.')
+    .description(locale.command.show.program.descriptions)
     .action(() => {
-        const dir: string = config.get('adr-path');
+        const dir: string = config.get('adrPath');
         directory.displayDirectory(dir);
     });
 
 program
     .command('status')
-    .description('Modify the status an ADR by id. The status chooice: proposed, acceptance, rejection, deprecation, superseding')
-    .argument('[id]', 'Default "0', status.setDefaultStatus, '0')
-    .option('-s,--status <new_status>', 'Set or change status for adr. The status chooice: proposed, acceptance, rejection, deprecation, superseding')
+    .description(locale.command.status.program.descriptions)
+    .argument('[id]', locale.command.status.program.argument, status.setDefaultStatus, '0')
+    .option('-s,--status <new_status>', locale.command.status.program.option)
     .action(async (id: string, data: Record<string, string>) => {
         const newStatus = data.status;
         const idAdr = Number.parseInt(id, 10);
@@ -83,32 +84,32 @@ program
 
 const configCmd = program
     .command('config')
-    .description('Command to configure properties for the cli.')
+    .description(locale.command.config.program.descriptions)
     .action((options: Record<string, string>) => {
         console.log(`new path for adrs is ${options.doc}`);
     });
 configCmd
     .command('get')
-    .argument('<name>', 'Name of propertiy to view value.')
-    .description('Command to get properties value.')
+    .argument('<name>', locale.command.config.get.argument)
+    .description(locale.command.config.get.description)
     .action((name: string | undefined) => {
         if (name !== undefined) {
             const nameCfg = config.get(name);
             if (nameCfg === undefined) {
-                console.error(chalk.red('Propertiy is undefined.'));
+                console.error(chalk.red(locale.command.config.get.messages.propertyNotValid));
             }
 
-            console.log(chalk.greenBright(`Value to property is: ${nameCfg}`));
+            console.log(chalk.greenBright(`${locale.command.config.get.messages.propertyName} ${nameCfg}`));
             process.exit(1);
         }
 
-        console.log(chalk.redBright.bold('Property not found. Please check the help.'));
+        console.log(chalk.redBright.bold(locale.command.config.get.messages.propertyNotFound));
         program.outputHelp();
     });
 configCmd
     .command('set')
-    .argument('<name>', 'Name of propertiy to setitng: propertiy=value')
-    .description('Command to set propertie value.')
+    .argument('<name>', locale.command.config.set.argument)
+    .description(locale.command.config.set.description)
     .action((name: string | undefined) => {
         if (name !== undefined) {
             const parsePropertie: string[] = name.split('=');
@@ -117,33 +118,41 @@ configCmd
 
             const chk = Schemas.validateConfigSchema(prop);
             if (!chk) {
-                console.log(chalk.greenBright.bold(`Property entered, ${parsePropertie[0]}, is not valid into the schema. Please tried again.`));
+                console.log(chalk.greenBright.bold(locale.command.config.set.messages.propertyEntered.replace('${parsePropertie[0]}', parsePropertie[0])));
                 process.exit(1);
             }
 
             config.set(parsePropertie[0], parsePropertie[1]);
-            const newProp = config.get('adr-path');
-            console.log(chalk.greenBright.bold(`Propertie ${parsePropertie[0]} changed to: ${newProp}`));
+            const newProp = config.get(parsePropertie[0]);
+            console.log(chalk.greenBright.bold(locale.command.config.set.messages.propertyChanged.replace('${parsePropertie[0]}',parsePropertie[0]).replace('${newProp}', newProp)));
             process.exit(1);
         }
 
-        console.log(chalk.redBright.bold('Property not found. Please check the help.'));
+        console.log(chalk.redBright.bold(locale.command.config.set.messages.propertyNotFound));
         program.outputHelp();
     });
 configCmd
     .command('path')
-    .description('Command to get the folder where is the config file for adr-tools.')
+    .description(locale.command.config.path.description)
     .action(() => {
-        console.log(`Configuration file create in this folder: ${chalk.cyan.bold(config.path)}`);
+        config.getCurrentPath();
     });
 configCmd
     .command('reset')
-    .description('Command to reset or regenerate the config file for defaults.')
+    .description(locale.command.config.reset.description)
     .action(() => {
         config.setDefaultValues({
-            'adr-path': 'doc\\adr',
+            'adrPath': 'doc\\adr',
+            "locale": "en",
+            "markdownEngine": "github"
         });
-        console.log(`CConfigurations file reset successfully in this folder: ${chalk.cyan.bold(config.path)}`);
+        config.resetConfig();
+    });
+configCmd
+    .command('show')
+    .description(locale.command.config.show.description)
+    .action(() => {
+        config.displayPropertiesValues();
     });
 
 program.parse(process.argv);

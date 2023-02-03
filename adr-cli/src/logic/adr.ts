@@ -7,6 +7,7 @@ import {markdownTable} from 'markdown-table';
 import {Configuration} from '../utils/configurations.js';
 import {Directory} from './directory.js';
 import {Enums} from './enums.js';
+import {Locale} from '../utils/locale.js';
 
 const config = new Configuration();
 const enums = new Enums();
@@ -18,7 +19,12 @@ const __dirname = path.dirname(__filename);
 
 export class Adr {
     private readonly _add = new Add();
-    private readonly pathAdr = config.get('adr-path');
+    private readonly pathAdr = config.get('adrPath');
+    private readonly _locale:any;
+
+    constructor() {
+        this._locale = Locale.getInstance().getLocale();
+    }
 
     public async getQuestionsToAdd(): Promise<Record<string, string>> {
         const result = this._add.questionsForAdd();
@@ -75,10 +81,12 @@ export class Adr {
 
     private validateOrCreateIndex(path: string, table: any) {
         try {
-            const templateIndedx = readFileSync(`${__dirname}\\..\\templates\\index.md`, {encoding: 'utf8', flag: 'r'});
+            console.log(chalk.green(this._locale.class.adr.Adr.validateOrCreateIndex.reading));
+            const locale = config.get('locale');
+            const templateIndedx = readFileSync(`${__dirname}\\..\\templates\\index-${locale}.md`, {encoding: 'utf8', flag: 'r'});
             const result = templateIndedx.replace(/<!--MakrToAppendFiles>/g, table);
             writeFileSync(`${path}\\index.md`, result, {mode: 0o777});
-            console.log(chalk.green('Index file generated successfully.'));
+            console.log(chalk.green(this._locale.class.adr.Adr.validateOrCreateIndex.generated));
         } catch (error: unknown) {
             console.error(chalk.red.bold(error));
             process.exit();
@@ -87,7 +95,7 @@ export class Adr {
 }
 
 export class Status {
-    private readonly pathAdr = config.get('adr-path');
+    private readonly pathAdr = config.get('adrPath');
     private readonly _adr = new Adr();
 
     public async getStatus(): Promise<Record<string, string>> {
@@ -187,20 +195,28 @@ export class Status {
 
 export class Add {
     // Template que usaremos para la creación del contenido del fichero
-    private templateAdr = readFileSync(`${__dirname}\\..\\templates\\adr.md`, {encoding: 'utf8', flag: 'r'});
-    private readonly pathAdr = config.get('adr-path');
+    private templateAdr:string;
+    private readonly pathAdr = config.get('adrPath');
     private readonly _directory = new Directory();
+    private readonly _locale:any;
 
-    public async questionsForAdd(): Promise<Record<string, string>> {
+    constructor() {
+        this._locale = Locale.getInstance().getLocale();
+        const locale = config.get('locale');
+        this.templateAdr = readFileSync(`${__dirname}\\..\\templates\\adr-${locale}.md`, {encoding: 'utf8', flag: 'r'});
+    }
+
+    public async questionsForAdd(): Promise<Record<string, string>> {        
         const qs = [{
             name: 'shortTitle',
             type: 'input',
-            message: 'short title of solved problem and solution',
+            message: this._locale.command.new.withAnswers.shortTitle,
         }, {
             name: 'contextDescription',
             type: 'input',
-            message: 'Context and Problem Statement: ',
+            message: this._locale.command.new.withAnswers.contextDescription,
         }];
+        
         return await inquirer.prompt(qs) as Record<string, string>;
     }
 
@@ -319,7 +335,7 @@ export class Add {
 
     private checkContextValid(string_: string) {
         if (this.isEmpty(string_)) {
-            return '{Describe the context and problem statement, e.g., in free form using two to three sentences or in the form of an illustrative story. You may want to articulate the problem in form of a question and add links to collaboration boards or issue management systems.}';
+            return this._locale.class.adr.Add.checkContextValid;
         }
 
         return string_;

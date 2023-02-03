@@ -7,34 +7,54 @@ const ajv = new Ajv();
 function schema() {
     return {
         "definitions": {},
-        "$schema": "http://json-schema.org/draft-07/schema#", 
-        "$id": "https://example.com/object1666202848.json", 
-        "title": "Root", 
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "$id": "https://example.com/object1675292430.json",
+        "title": "Root",
         "type": "object",
-        "required": [
-            "adr-path"
-        ],
         "properties": {
             "adr-path": {
-                "$id": "#root/adr-path", 
-                "title": "Adr-path", 
+                "$id": "#root/adrPath",
+                "title": "Adr-path",
                 "type": "string",
                 "default": "",
                 "examples": [
                     "doc\\adr"
                 ],
                 "pattern": "^.*$"
+            },
+            "locale": {
+                "$id": "#root/locale",
+                "title": "Locale",
+                "type": "string",
+                "enum": ["en", "es"],
+                "default": "en",
+                "examples": [
+                    "en"
+                ],
+                "pattern": "^.*$"
+            },
+            "markdownEngine": {
+                "$id": "#root/markdownEngine",
+                "title": "Markdownengine",
+                "type": "string",
+                "enum": ["github", "gitlab"],
+                "default": "github",
+                "examples": [
+                    "github"
+                ],
+                "pattern": "^.*$"
             }
         }
-    }    
+    }
+
 }
 export class Schemas {
-    public static validateConfigSchema(data:any){
-        let validate:any = ajv.compile(schema())
+    public static validateConfigSchema(data: any) {
+        let validate: any = ajv.compile(schema())
         let valid = validate(data)
         if (!valid) {
-            let errors =validate.errors;
-            errors.forEach((item:any) => {
+            let errors = validate.errors;
+            errors.forEach((item: any) => {
                 console.error(`
                 Error propertie definition:
                 keyword: ${chalk.red.bold(item.keyword)}
@@ -42,10 +62,10 @@ export class Schemas {
                 menssage: ${chalk.red.bold(item.message)}
                 `);
             });
-            
+
             return false;
         }
-    
+
         return true;
     }
 }

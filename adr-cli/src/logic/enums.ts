@@ -6,5 +6,10 @@ export class Enums {
         deprecation: '$\\color{Orange}{deprecation}$',
         superseding: '$\\color{Violet}{superseding}$',
     };
+
+    public markdownEngine = {
+        github: 'github',
+        gitlab: 'gitlab',
+    };
 }
 export default Enums;

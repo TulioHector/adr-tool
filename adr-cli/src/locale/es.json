@@ -1,0 +1,91 @@
+{
+    "command": {
+        "config": {
+            "program": {
+                "descriptions": "Comando para configurar propiedades para el cli."
+            },
+            "show": {
+                "description": "Comando para mostrar los valores clave de las configuraciones. Las propiedades distinguen entre mayúsculas y minúsculas",
+                "table": {
+                    "columnName": [
+                        "Propertie",
+                        "Value",
+                        "Descriptions"
+                    ],
+                    "rows": {
+                        "adrPath": "Directory de instalacion de la herramienta adr-tools.",
+                        "locale": "idioma seleccionado para la herramienta.",
+                        "markdownEngine": "Seleccionar el tipo de interprete para markdown. Solo soportado hasta ahora github and gitlab"
+                    }
+                }
+            },
+            "get": {
+                "argument": "Nombre de la propiedad para ver el valor.",
+                "description": "Comando para obtener el valor de las propiedades.",
+                "messages": {
+                    "propertyNotFound": "Propiedad no encontrada. Por favor, consulte la ayuda.",
+                    "propertyNotValid": "La propiedad no está definida.",
+                    "propertyName": "El valor de la propiedad es: "
+                }
+            },
+            "set": {
+                "argument": "Nombre de la propiedad a configuración: propiedad=valor",
+                "description": "Comando para establecer el valor de la propiedad.",
+                "messages": {
+                    "propertyEntered": "La propiedad ingresada, ${parsePropertie[0]}, no es válida en el esquema. Inténtalo de nuevo.",
+                    "propertyChanged": "La propiedad ${parse Property[0]} cambió a: ${newProp}",
+                    "propertyNotFound": "El valor de la propiedad es: "
+                }
+            },
+            "reset": {
+                "description": "Comando para restablecer o regenerar el archivo de configuración por defecto."
+            },
+            "path": {
+                "description": "Comando para obtener la carpeta donde está el archivo de configuración para adr-tools."
+            }
+        },
+        "new": {
+            "withAnswers": {
+                "shortTitle": "Título corto de problema resuelto y solución",
+                "contextDescription": "Contexto y declaración del problema: "
+            },
+            "WithOutAnswers": {
+                
+            },
+            "program": {
+                "descriptions": "Cree un nuevo archivo ADR en el directorio de documentos. Teniendo en cuenta el directorio relativo en el que se encuentra.",
+                "arguments": "Nombre del título para ADR"
+            }
+        },
+        "index": {
+            "program": {
+                "descriptions": "Cree un archivo de índice en el directorio de documentos. Teniendo en cuenta el directorio relativo en el que se encuentra."
+            }
+        },
+        "show":{
+            "program": {
+                "descriptions": "Mostrar lista de archivos ADR. Por defecto es \"doc/adr\" en el directorio relativo."
+            }
+        },
+        "status": {
+            "program": {
+                "descriptions": "Modificar el estado de un ADR por id. La elección de estado: proposed, acceptance, rejection, deprecation, superseding",
+                "argument": "Default 0",
+                "option": "Establecer o cambiar el estado de adr. La elección de estado: proposed, acceptance, rejection, deprecation, superseding"
+            }
+        }
+    },
+    "class":{
+        "adr":{
+            "Add":{
+                "checkContextValid": "{Describa el contexto y la declaración del problema, por ejemplo, en forma libre usando dos o tres oraciones o en forma de una historia ilustrativa. Es posible que desee articular el problema en forma de pregunta y agregar enlaces a tableros de colaboración o sistemas de gestión de problemas.}"
+            },
+            "Adr": {
+                "validateOrCreateIndex": {
+                    "reading": "Lectura de archivos ADR en el índice generado.",
+                    "generated": "Archivo de índice generado con éxito."
+                }
+            }
+        }
+    }
+}
