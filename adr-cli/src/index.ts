@@ -9,8 +9,9 @@ import {Directory} from './logic/directory.js';
 import {Schemas} from './utils/schemas.js';
 import {Configuration} from './utils/configurations.js';
 import {Locale} from './utils/locale.js';
+import type {ILocale} from './utils/ilocale.js';
 
-const locale = Locale.getInstance().getLocale();
+const locale: ILocale = Locale.getInstance().getLocale();
 const config = new Configuration();
 const program = new Command();
 const adr = new Adr();
@@ -118,13 +119,14 @@ configCmd
 
             const chk = Schemas.validateConfigSchema(prop);
             if (!chk) {
-                console.log(chalk.greenBright.bold(locale.command.config.set.messages.propertyEntered.replace('${parsePropertie[0]}', parsePropertie[0])));
+                const messages: string = locale.command.config.set.messages.propertyEntered.replace('$parseProperty', parsePropertie[0]);
+                console.log(chalk.greenBright.bold(messages));
                 process.exit(1);
             }
 
             config.set(parsePropertie[0], parsePropertie[1]);
             const newProp = config.get(parsePropertie[0]);
-            console.log(chalk.greenBright.bold(locale.command.config.set.messages.propertyChanged.replace('${parsePropertie[0]}',parsePropertie[0]).replace('${newProp}', newProp)));
+            console.log(chalk.greenBright.bold(locale.command.config.set.messages.propertyChanged.replace('${parsePropertie[0]}', parsePropertie[0]).replace('${newProp}', newProp)));
             process.exit(1);
         }
 
@@ -142,9 +144,9 @@ configCmd
     .description(locale.command.config.reset.description)
     .action(() => {
         config.setDefaultValues({
-            'adrPath': 'doc\\adr',
-            "locale": "en",
-            "markdownEngine": "github"
+            adrPath: 'doc\\adr',
+            locale: 'en',
+            markdownEngine: 'github',
         });
         config.resetConfig();
     });

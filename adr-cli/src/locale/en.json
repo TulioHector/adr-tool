@@ -32,7 +32,7 @@
                 "argument": "Property name to config: property=value",
                 "description": "Command to set property value.",
                 "messages": {
-                    "propertyEntered": "Property entered, ${parsePropertie[0]}, is not valid into the schema. Please tried again.",
+                    "propertyEntered": "Property entered, $parseProperty, is not valid into the schema. Please tried again.",
                     "propertyChanged": "Property ${parsePropertie[0]} changed to: ${newProp}",
                     "propertyNotFound": "Value to property is: "
                 }

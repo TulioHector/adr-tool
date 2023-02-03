@@ -1,5 +1,6 @@
 import { readFileSync} from 'fs';
 import { ModulesPath } from './managePath.js';
+import { Convert } from './ilocale.js';
 
 export class Locale {
     private static currentLocale:Locale = new Locale();
@@ -17,7 +18,7 @@ export class Locale {
         return Locale.currentLocale;
     }
 
-    public getLocale():any
+    public getLocale()
     {
         const pathApp = ModulesPath.getInstalledPathSync('adr-cli');
         const pathConfigFile: string = `${ModulesPath.getInstalledPathSync('adr-cli')}\\dist\\config\\default.json`;
@@ -25,8 +26,8 @@ export class Locale {
         const dataConfig = JSON.parse(fileConfig);
 
         this._locale = readFileSync(`${pathApp}\\dist\\locale\\${dataConfig['locale']}.json`, { encoding: 'utf8', flag: 'r' });
-        const dataLocale = JSON.parse(this._locale);
-        return dataLocale;
+        const iLocale = Convert.toILocale(this._locale);
+        return iLocale;
     }
 }
 

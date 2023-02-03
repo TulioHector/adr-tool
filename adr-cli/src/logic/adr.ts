@@ -5,9 +5,10 @@ import chalk from 'chalk';
 import inquirer from 'inquirer';
 import {markdownTable} from 'markdown-table';
 import {Configuration} from '../utils/configurations.js';
+import {Locale} from '../utils/locale.js';
+import type {ILocale} from '../utils/ilocale.js';
 import {Directory} from './directory.js';
 import {Enums} from './enums.js';
-import {Locale} from '../utils/locale.js';
 
 const config = new Configuration();
 const enums = new Enums();
@@ -20,7 +21,7 @@ const __dirname = path.dirname(__filename);
 export class Adr {
     private readonly _add = new Add();
     private readonly pathAdr = config.get('adrPath');
-    private readonly _locale:any;
+    private readonly _locale: ILocale;
 
     constructor() {
         this._locale = Locale.getInstance().getLocale();
@@ -81,12 +82,12 @@ export class Adr {
 
     private validateOrCreateIndex(path: string, table: any) {
         try {
-            console.log(chalk.green(this._locale.class.adr.Adr.validateOrCreateIndex.reading));
+            console.log(chalk.green(this._locale.class.adr.adr.validateOrCreateIndex.reading));
             const locale = config.get('locale');
             const templateIndedx = readFileSync(`${__dirname}\\..\\templates\\index-${locale}.md`, {encoding: 'utf8', flag: 'r'});
             const result = templateIndedx.replace(/<!--MakrToAppendFiles>/g, table);
             writeFileSync(`${path}\\index.md`, result, {mode: 0o777});
-            console.log(chalk.green(this._locale.class.adr.Adr.validateOrCreateIndex.generated));
+            console.log(chalk.green(this._locale.class.adr.adr.validateOrCreateIndex.generated));
         } catch (error: unknown) {
             console.error(chalk.red.bold(error));
             process.exit();
@@ -151,11 +152,13 @@ export class Status {
             case 'acceptance':
             case 'rejection':
             case 'deprecation':
-            case 'superseding':
+            case 'superseding': {
                 return true;
-            default:
+            }
+            default: {
                 console.error(chalk.red('Error in status definitions.'));
                 return false;
+            }
         }
     }
 
@@ -176,29 +179,35 @@ export class Status {
 
     private setStatusColor(status: string): string {
         switch (status) {
-            case 'proposed':
+            case 'proposed': {
                 return `* Status: ${enums.statusColor.proposed}`;
-            case 'acceptance':
+            }
+            case 'acceptance': {
                 return `* Status: ${enums.statusColor.acceptance}`;
-            case 'rejection':
+            }
+            case 'rejection': {
                 return `* Status: ${enums.statusColor.rejection}`;
-            case 'deprecation':
+            }
+            case 'deprecation': {
                 return `* Status: ${enums.statusColor.deprecation}`;
-            case 'superseding':
+            }
+            case 'superseding': {
                 return `* Status: ${enums.statusColor.superseding}`;
-            default:
+            }
+            default: {
                 console.error(chalk.red('Error in status definitions.'));
                 return 'false';
+            }
         }
     }
 }
 
 export class Add {
     // Template que usaremos para la creación del contenido del fichero
-    private templateAdr:string;
+    private templateAdr: string;
     private readonly pathAdr = config.get('adrPath');
     private readonly _directory = new Directory();
-    private readonly _locale:any;
+    private readonly _locale: ILocale;
 
     constructor() {
         this._locale = Locale.getInstance().getLocale();
@@ -206,7 +215,7 @@ export class Add {
         this.templateAdr = readFileSync(`${__dirname}\\..\\templates\\adr-${locale}.md`, {encoding: 'utf8', flag: 'r'});
     }
 
-    public async questionsForAdd(): Promise<Record<string, string>> {        
+    public async questionsForAdd(): Promise<Record<string, string>> {
         const qs = [{
             name: 'shortTitle',
             type: 'input',
@@ -216,7 +225,6 @@ export class Add {
             type: 'input',
             message: this._locale.command.new.withAnswers.contextDescription,
         }];
-        
         return await inquirer.prompt(qs) as Record<string, string>;
     }
 
@@ -335,7 +343,7 @@ export class Add {
 
     private checkContextValid(string_: string) {
         if (this.isEmpty(string_)) {
-            return this._locale.class.adr.Add.checkContextValid;
+            return this._locale.class.adr.add.checkContextValid;
         }
 
         return string_;
