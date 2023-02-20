@@ -1,12 +1,12 @@
-# $shortTitle
+# test template with datetime current
 
-* Status: $\color{DodgerBlue}{proposal}$
-* Date: $dateAdr
+* Status: $\\color{MediumSeaGreen}{acceptance}$
+* Date: 2023-02-17 05:16:28
 * Rel:
 
 ## Context and Problem Statement
 
-$contextDescription
+{Describe the context and problem statement, e.g., in free form using two to three sentences or in the form of an illustrative story. You may want to articulate the problem in form of a question and add links to collaboration boards or issue management systems.}
 
 
 <!-- This is an optional element. Feel free to remove. -->

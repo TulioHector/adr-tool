@@ -1,15 +1,15 @@
 #! /usr/bin/env node
 
 import chalk from 'chalk';
-import {Command} from 'commander';
-import {Banner} from './utils/banner.js';
-import {Utils} from './utils/utils.js';
-import {Adr, Status} from './logic/adr.js';
-import {Directory} from './logic/directory.js';
-import {Schemas} from './utils/schemas.js';
-import {Configuration} from './utils/configurations.js';
-import {Locale} from './utils/locale.js';
-import type {ILocale} from './utils/ilocale.js';
+import { Argument, Command } from 'commander';
+import { Banner } from './utils/banner.js';
+import { Utils } from './utils/utils.js';
+import { Adr, Status } from './logic/adr.js';
+import { Directory } from './logic/directory.js';
+import { Schemas } from './utils/schemas.js';
+import { Configuration } from './utils/configurations.js';
+import { Locale } from './utils/locale.js';
+import type { ILocale } from './utils/ilocale.js';
 
 const locale: ILocale = Locale.getInstance().getLocale();
 const config = new Configuration();
@@ -67,6 +67,20 @@ program
         directory.displayDirectory(dir);
     });
 
+
+program
+    .command('init')
+    .description(locale.command.init.program.description)
+    .action(() => {
+        const dir: string = config.get('adrPath');
+        const result: boolean = directory.initDirectory(dir);
+        if(result) {
+            console.log(chalk.redBright.bold(locale.command.init.program.messages.successfully));
+        }else{
+            console.log(chalk.redBright.bold(locale.command.init.program.messages.wrong));
+        }
+    });
+
 program
     .command('status')
     .description(locale.command.status.program.descriptions)
@@ -81,6 +95,17 @@ program
         } else {
             status.setStatusToAdr(idAdr, newStatus);
         }
+    });
+
+program
+    .command('rel')
+    .description('Mark relation ADR to other/s ADR')
+    .argument('[id]', 'ADR source id', function(value: string, defaultValue: string){return value;}, '0')
+    .option('-t,--to <id_adr>', 'ADR Id to add to source ADR. To add many Id`s, add separate by comma.')
+    .action(async (id: string, adrToRelation: Record<string, string>) => {
+        const sourceId = Number.parseInt(id, 10);
+        const destinationId = adrToRelation.to.split(' ');
+        adr.addRelationToAdr(sourceId, destinationId);
     });
 
 const configCmd = program

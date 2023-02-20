@@ -1,6 +1,6 @@
 {
   "name": "adr-cli",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "preferGlobal": true,
   "description": "Architecture Decision Records (ADR) command cli",
   "main": "dist/index.js",
@@ -32,6 +32,7 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
+    "@types/n-readlines": "^1.0.3",
     "ajv": "^8.12.0",
     "chalk": "^5.2.0",
     "cli-table3": "^0.6.3",
@@ -39,7 +40,9 @@
     "figlet": "^1.5.2",
     "inquirer": "^9.1.4",
     "listr": "^0.14.3",
-    "markdown-table": "^3.0.3"
+    "markdown-table": "^3.0.3",
+    "moment": "^2.29.4",
+    "n-readlines": "^1.0.1"
   },
   "repository": {
     "type": "git",

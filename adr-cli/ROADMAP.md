@@ -1,6 +1,14 @@
 # Roadmap
     ADR-CLI
 
+## Feature Version 1.2.1
+Version 1.2.1 se agregan nuevas funcionalidades, las cuales son las siguientes:
+
+- Argumento "Init"; crea la inicializacion del directrio de trabajo para guardar los documntos ADR.
+- Se modifica el tempalte de ADR para agregar la fecha actual al momento de crear un nuevo ADR.
+- Ver en index y tabla de ADR`s, el estado y color del mismo.
+- Se agrega nueva funcionalidad relacionar un ADR con otro/s.
+
 ## Feature Versions 1.2.0
 Version 1.2.0 se agregan nuevas funcionalidades, las cuales son las siguientes:
 

@@ -2,6 +2,7 @@
 
 * Status: $\color{DodgerBlue}{proposal}$
 * Date: 2022-10-13
+* Rel:
 
 ## Problema y contexto
 

@@ -1,7 +1,8 @@
 # Prueba con promise
 
-* Status: $\color{DodgerBlue}{proposal}$
+* Status: $\\color{Orange}{deprecation}$
 * Date: 2022-10-13
+* Rel:
 
 ## Context and Problem Statement
 

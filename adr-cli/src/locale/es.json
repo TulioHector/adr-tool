@@ -73,6 +73,15 @@
                 "argument": "Default 0",
                 "option": "Establecer o cambiar el estado de adr. La elección de estado: proposed, acceptance, rejection, deprecation, superseding"
             }
+        },
+        "init": {
+            "program": {
+                "description": "Inicializar el directorio de trabajo para las ADR`s",
+                "messages": {
+                    "successfully": "¡El directorio de inicio se hizo con éxito!",
+                    "wrong": "¡El directorio de inicio es incorrecto o existe!"
+                }
+            }
         }
     },
     "class":{

@@ -34,14 +34,15 @@ Commands:
   new [title]            Create a new ADR file into document directory. Considering the relative directory in which it is located.
   index                  Create index file into document directory. Considering the relative directory in which it is located.
   show                   Show list of ADR files. For default is "doc/adr" in relative directory.
+  init                   Initialize the working directory for the ADR`s
   status [options] [id]  Modify the status an ADR by id. The status chooice: proposed, acceptance, rejection, deprecation, superseding
   config                 Command to configure properties for the cli.
   help [command]         display help for command
 
 
     Example call config:
-      $ adr-cli config get adr-path"
-      $ adr-cli config set adr-path="<new_path>"
+      $ adr-cli config get adrPath"
+      $ adr-cli config set adrPath="<new_path>"
   ```
 
 ## New ADR
@@ -90,6 +91,15 @@ Options:
   -h, --help  display help for command
 ```
 
+## Init work directory
+
+Usage: adr-cli init
+
+Initialize the working directory for the ADR`s
+
+Options:
+  -h, --help  display help for command
+
 ## Show and modify status of ADR
 ```bash
  adr-cli status -h
@@ -108,6 +118,22 @@ Options:
   -h, --help                display help for command
 ```
 
+## Configure ADR relationship with other ADRs
+```bash
+adr-cli rel -h
+```
+```sh
+Usage: adr-cli rel [options] [id]
+
+Mark relation ADR to other/s ADR
+
+Arguments:
+  id                ADR source id (default: "0")
+
+Options:
+  -t,--to <id_adr>  ADR Id to add to source ADR. To add many Id`s, add separate by comma.
+  -h, --help        display help for command
+```
 ## Show and modify config settings of adr-cli
 ```bash
  adr-cli config -h

@@ -1,7 +1,8 @@
 # prueba unoi
 
-* Status: $\color{DodgerBlue}{proposal}$
+* Status: $\\color{Violet}{superseding}$
 * Date: 2022-10-13
+* Rel: 0003,0006,0002,0007
 
 ## Context and Problem Statement
 

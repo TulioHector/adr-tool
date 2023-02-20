@@ -9,6 +9,8 @@ import {Locale} from '../utils/locale.js';
 import type {ILocale} from '../utils/ilocale.js';
 import {Directory} from './directory.js';
 import {Enums} from './enums.js';
+import Moment from 'moment';
+import Utils from '../utils/utils.js';
 
 const config = new Configuration();
 const enums = new Enums();
@@ -50,9 +52,14 @@ export class Adr {
         const files = readdirSync(path);
         for (const file of files) {
             const seq = this.getSequences(file);
+            const statusAdr = Directory.getStatusForAdr(file, path);
+            const matches = statusAdr.matchAll(/{([^}]*)}/g);
+            const matches2 = Array.from(matches);
+            const textColor = matches2[0][1];
+            const textStatus = matches2[1][1];
             let title = file.replace(/-/g, ' ').replace(/.md/g, '');
             title = title.slice(5, title.length);
-            const row = [`[ADR-${seq}](adr/${file})`, title, '$\\color{DodgerBlue}{proposed}$'];
+            const row = [`[ADR-${seq}](adr/${file})`, title, `$\\color{${textColor}}{${textStatus}}$`];
             fileArray.push(row);
         }
 
@@ -60,7 +67,7 @@ export class Adr {
         this.validateOrCreateIndex(pathdir, table);
     }
 
-    public getSequences(string_: string) {
+    public getSequences(string_: string): string {
         try {
             if (string_ === undefined) {
                 string_ = '0000';
@@ -75,12 +82,29 @@ export class Adr {
                 message = error.message;
                 console.error(chalk.red.bold(`Error in parse next sequence to adr file:${message}`));
             }
-
             process.exit();
         }
     }
 
-    private validateOrCreateIndex(path: string, table: any) {
+    //
+    public addRelationToAdr(ids: number, idTo: string[]): void {
+        const pathdir = `${pathBase}\\${this.pathAdr}`;
+        let nameFile = Utils.getFileNameById(ids);
+        nameFile = `${pathdir}\\${nameFile}`;
+        this.addRelationsToAdr(nameFile, idTo);
+    }
+
+    private addRelationsToAdr(nameFile: string, idTo: string[]): void {
+        const file = readFileSync(nameFile, {encoding: 'utf8', flag: 'r'});
+        const searchString = '* Rel:';
+        const re = new RegExp(`^.*\\${searchString}.*$`, 'gm');
+        const adrsIds = Array.from(idTo, x => x.padStart(4, '0'))
+        const text = `${searchString} ${adrsIds.toString()}`;
+        const formatted = file.replace(re, text);
+        writeFileSync(nameFile, formatted, {mode: 0o777});
+    }
+
+    private validateOrCreateIndex(path: string, table: any): void {
         try {
             console.log(chalk.green(this._locale.class.adr.adr.validateOrCreateIndex.reading));
             const locale = config.get('locale');
@@ -249,6 +273,8 @@ export class Add {
 
         try {
             this.templateAdr = this.templateAdr.replace('$shortTitle', data.shortTitle);
+            const date = Moment().format('YYYY-MM-DD hh:mm:ss');
+            this.templateAdr = this.templateAdr.replace('$dateAdr', date);
             this.templateAdr = this.templateAdr.replace('$contextDescription', this.checkContextValid(data.contextDescription));
             writeFileSync(file, this.templateAdr, {mode: 0o777});
         } catch (error: unknown) {
@@ -288,6 +314,8 @@ export class Add {
 
         try {
             this.templateAdr = this.templateAdr.replace('$shortTitle', data.shortTitle);
+            const date = Moment().format('YYYY-MM-DD hh:mm:ss');
+            this.templateAdr = this.templateAdr.replace('$dateAdr', date);
             this.templateAdr = this.templateAdr.replace('$contextDescription', this.checkContextValid(''));
             writeFileSync(file, this.templateAdr, {mode: 0o777});
         } catch (error: unknown) {

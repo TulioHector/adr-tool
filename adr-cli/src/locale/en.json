@@ -71,6 +71,15 @@
                 "argument": "Default 0",
                 "option": "Set or change status for adr. The status chooice: proposed, acceptance, rejection, deprecation, superseding"
             }
+        },
+        "init": {
+            "program": {
+                "description": "Initialize the working directory for the ADR`s",
+                "messages": {
+                    "successfully": "Init directory make successfully!",
+                    "wrong": "Init directory make wrong or is exist!"
+                }
+            }
         }
     },
     "class": {

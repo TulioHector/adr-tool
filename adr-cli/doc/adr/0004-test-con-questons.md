@@ -1,7 +1,8 @@
 # Test con questons
 
-* Status: $\color{DodgerBlue}{proposal}$
+* Status: $\\color{Tomato}{rejection}$
 * Date: 2022-10-13
+* Rel:
 
 ## Context and Problem Statement
 

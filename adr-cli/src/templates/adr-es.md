@@ -1,7 +1,8 @@
 # $shortTitle
 
 * Status: $\color{DodgerBlue}{proposal}$
-* Date: 2022-10-13
+* Date: $dateAdr
+* Rel:
 
 ## Problema y contexto
 

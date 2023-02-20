@@ -1,5 +1,6 @@
-// To parse this data:
 //https://app.quicktype.io/
+// To parse this data:
+//
 //   import { Convert, ILocale } from "./file";
 //
 //   const iLocale = Convert.toILocale(json);
@@ -40,6 +41,7 @@ export interface Command {
     index:  Index;
     show:   Index;
     status: Status;
+    init:   Init;
 }
 
 export interface Config {
@@ -101,6 +103,20 @@ export interface Rows {
 
 export interface Index {
     program: ConfigProgram;
+}
+
+export interface Init {
+    program: InitProgram;
+}
+
+export interface InitProgram {
+    description: string;
+    messages:    ProgramMessages;
+}
+
+export interface ProgramMessages {
+    successfully: string;
+    wrong:        string;
 }
 
 export interface New {
@@ -324,6 +340,7 @@ const typeMap: any = {
         { json: "index", js: "index", typ: r("Index") },
         { json: "show", js: "show", typ: r("Index") },
         { json: "status", js: "status", typ: r("Status") },
+        { json: "init", js: "init", typ: r("Init") },
     ], false),
     "Config": o([
         { json: "program", js: "program", typ: r("ConfigProgram") },
@@ -374,6 +391,17 @@ const typeMap: any = {
     ], false),
     "Index": o([
         { json: "program", js: "program", typ: r("ConfigProgram") },
+    ], false),
+    "Init": o([
+        { json: "program", js: "program", typ: r("InitProgram") },
+    ], false),
+    "InitProgram": o([
+        { json: "description", js: "description", typ: "" },
+        { json: "messages", js: "messages", typ: r("ProgramMessages") },
+    ], false),
+    "ProgramMessages": o([
+        { json: "successfully", js: "successfully", typ: "" },
+        { json: "wrong", js: "wrong", typ: "" },
     ], false),
     "New": o([
         { json: "withAnswers", js: "withAnswers", typ: r("WithAnswers") },
