@@ -80,6 +80,13 @@
                     "wrong": "Init directory make wrong or is exist!"
                 }
             }
+        },
+        "rel": {
+            "program": {
+                "description": "Mark relation ADR to other/s ADR",
+                "argument": "ADR source id",
+                "option": "ADR Id to add to source ADR. To add many Id`s, add separate by comma."
+            }
         }
     },
     "class": {

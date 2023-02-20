@@ -5,6 +5,22 @@ import Utils from '../utils/utils.js';
 
 const pathBase = process.cwd();
 export class Directory {
+    public static getStatusForAdr(adrName: string, path: string): string {
+        const liner = new LineByLine(`${path}\\${adrName}`);
+        let line = liner.next();
+        let lineNumber = 0;
+        while (line) {
+            const lineString = line.toString('ascii');
+            if (lineString.includes('* Status:')) {
+                const parse = lineString.split('* Status:');
+                return parse[1];
+            }
+            lineNumber++;
+            line = liner.next();
+        }
+        return 'status not found';
+    }
+
     public getMostRecentFile(dir: string) {
         const files = this.orderReccentFiles(dir);
         return files.length > 0 ? files : [];
@@ -46,25 +62,10 @@ export class Directory {
 
     public initDirectory(dir: string): boolean {
         if (!existsSync(dir)) {
-            mkdirSync(dir, { recursive: true });
+            mkdirSync(dir, {recursive: true});
             return true;
         }
         return false;
-    }
-
-    public static getStatusForAdr(adrName: string, path: string): string {
-        const liner = new LineByLine(`${path}\\${adrName}`);
-        let line;
-        let lineNumber = 0;
-        while (line = liner.next()) {
-            const lineString = line.toString('ascii');
-            if (lineString.includes('* Status:')) {
-                const parse = lineString.split('* Status:');
-                return parse[1];
-            }
-            lineNumber++;
-        }
-        return "status not found";
     }
 }
 

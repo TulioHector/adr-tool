@@ -4,13 +4,13 @@ import path from 'node:path';
 import chalk from 'chalk';
 import inquirer from 'inquirer';
 import {markdownTable} from 'markdown-table';
+import moment from 'moment';
 import {Configuration} from '../utils/configurations.js';
 import {Locale} from '../utils/locale.js';
 import type {ILocale} from '../utils/ilocale.js';
+import Utils from '../utils/utils.js';
 import {Directory} from './directory.js';
 import {Enums} from './enums.js';
-import Moment from 'moment';
-import Utils from '../utils/utils.js';
 
 const config = new Configuration();
 const enums = new Enums();
@@ -94,11 +94,15 @@ export class Adr {
         this.addRelationsToAdr(nameFile, idTo);
     }
 
+    public setDefaultRel(value: string, defaultValue: string) {
+        return value;
+    }
+
     private addRelationsToAdr(nameFile: string, idTo: string[]): void {
         const file = readFileSync(nameFile, {encoding: 'utf8', flag: 'r'});
         const searchString = '* Rel:';
         const re = new RegExp(`^.*\\${searchString}.*$`, 'gm');
-        const adrsIds = Array.from(idTo, x => x.padStart(4, '0'))
+        const adrsIds = Array.from(idTo, x => x.padStart(4, '0'));
         const text = `${searchString} ${adrsIds.toString()}`;
         const formatted = file.replace(re, text);
         writeFileSync(nameFile, formatted, {mode: 0o777});
@@ -273,7 +277,7 @@ export class Add {
 
         try {
             this.templateAdr = this.templateAdr.replace('$shortTitle', data.shortTitle);
-            const date = Moment().format('YYYY-MM-DD hh:mm:ss');
+            const date = moment().format('YYYY-MM-DD hh:mm:ss');
             this.templateAdr = this.templateAdr.replace('$dateAdr', date);
             this.templateAdr = this.templateAdr.replace('$contextDescription', this.checkContextValid(data.contextDescription));
             writeFileSync(file, this.templateAdr, {mode: 0o777});
@@ -314,7 +318,7 @@ export class Add {
 
         try {
             this.templateAdr = this.templateAdr.replace('$shortTitle', data.shortTitle);
-            const date = Moment().format('YYYY-MM-DD hh:mm:ss');
+            const date = moment().format('YYYY-MM-DD hh:mm:ss');
             this.templateAdr = this.templateAdr.replace('$dateAdr', date);
             this.templateAdr = this.templateAdr.replace('$contextDescription', this.checkContextValid(''));
             writeFileSync(file, this.templateAdr, {mode: 0o777});

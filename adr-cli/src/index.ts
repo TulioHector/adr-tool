@@ -1,15 +1,15 @@
 #! /usr/bin/env node
 
 import chalk from 'chalk';
-import { Argument, Command } from 'commander';
-import { Banner } from './utils/banner.js';
-import { Utils } from './utils/utils.js';
-import { Adr, Status } from './logic/adr.js';
-import { Directory } from './logic/directory.js';
-import { Schemas } from './utils/schemas.js';
-import { Configuration } from './utils/configurations.js';
-import { Locale } from './utils/locale.js';
-import type { ILocale } from './utils/ilocale.js';
+import {Command} from 'commander';
+import {Banner} from './utils/banner.js';
+import {Utils} from './utils/utils.js';
+import {Adr, Status} from './logic/adr.js';
+import {Directory} from './logic/directory.js';
+import {Schemas} from './utils/schemas.js';
+import {Configuration} from './utils/configurations.js';
+import {Locale} from './utils/locale.js';
+import type {ILocale} from './utils/ilocale.js';
 
 const locale: ILocale = Locale.getInstance().getLocale();
 const config = new Configuration();
@@ -67,16 +67,15 @@ program
         directory.displayDirectory(dir);
     });
 
-
 program
     .command('init')
     .description(locale.command.init.program.description)
     .action(() => {
         const dir: string = config.get('adrPath');
         const result: boolean = directory.initDirectory(dir);
-        if(result) {
+        if (result) {
             console.log(chalk.redBright.bold(locale.command.init.program.messages.successfully));
-        }else{
+        } else {
             console.log(chalk.redBright.bold(locale.command.init.program.messages.wrong));
         }
     });
@@ -99,9 +98,9 @@ program
 
 program
     .command('rel')
-    .description('Mark relation ADR to other/s ADR')
-    .argument('[id]', 'ADR source id', function(value: string, defaultValue: string){return value;}, '0')
-    .option('-t,--to <id_adr>', 'ADR Id to add to source ADR. To add many Id`s, add separate by comma.')
+    .description(locale.command.rel.program.description)
+    .argument('[id]', locale.command.rel.program.argument, adr.setDefaultRel, '0')
+    .option('-t,--to <id_adr>', locale.command.rel.program.option)
     .action(async (id: string, adrToRelation: Record<string, string>) => {
         const sourceId = Number.parseInt(id, 10);
         const destinationId = adrToRelation.to.split(' ');

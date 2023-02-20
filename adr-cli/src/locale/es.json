@@ -82,6 +82,13 @@
                     "wrong": "¡El directorio de inicio es incorrecto o existe!"
                 }
             }
+        },
+        "rel": {
+            "program": {
+                "description": "Marcar relación ADR con otra/s ADR",
+                "argument": "ID de origen ADR",
+                "option": "ID de ADR para agregar al ADR de origen. Para agregar muchos Id`s, agregue separados por coma."
+            }
         }
     },
     "class":{

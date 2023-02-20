@@ -42,6 +42,7 @@ export interface Command {
     show:   Index;
     status: Status;
     init:   Init;
+    rel:    Rel;
 }
 
 export interface Config {
@@ -136,6 +137,16 @@ export interface WithAnswers {
 }
 
 export interface WithOutAnswers {
+}
+
+export interface Rel {
+    program: RelProgram;
+}
+
+export interface RelProgram {
+    description: string;
+    argument:    string;
+    option:      string;
 }
 
 export interface Status {
@@ -341,6 +352,7 @@ const typeMap: any = {
         { json: "show", js: "show", typ: r("Index") },
         { json: "status", js: "status", typ: r("Status") },
         { json: "init", js: "init", typ: r("Init") },
+        { json: "rel", js: "rel", typ: r("Rel") },
     ], false),
     "Config": o([
         { json: "program", js: "program", typ: r("ConfigProgram") },
@@ -417,6 +429,14 @@ const typeMap: any = {
         { json: "contextDescription", js: "contextDescription", typ: "" },
     ], false),
     "WithOutAnswers": o([
+    ], false),
+    "Rel": o([
+        { json: "program", js: "program", typ: r("RelProgram") },
+    ], false),
+    "RelProgram": o([
+        { json: "description", js: "description", typ: "" },
+        { json: "argument", js: "argument", typ: "" },
+        { json: "option", js: "option", typ: "" },
     ], false),
     "Status": o([
         { json: "program", js: "program", typ: r("StatusProgram") },
