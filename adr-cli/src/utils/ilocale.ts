@@ -18,8 +18,8 @@ export interface Class {
 }
 
 export interface Adr {
-    add: Add;
-    adr: AdrClass;
+    Add: Add;
+    Adr: AdrClass;
 }
 
 export interface Add {
@@ -28,6 +28,11 @@ export interface Add {
 
 export interface AdrClass {
     validateOrCreateIndex: ValidateOrCreateIndex;
+    suppressedAdr:         SuppressedAdr;
+}
+
+export interface SuppressedAdr {
+    okRanameAdrFile: string;
 }
 
 export interface ValidateOrCreateIndex {
@@ -36,13 +41,14 @@ export interface ValidateOrCreateIndex {
 }
 
 export interface Command {
-    config: Config;
-    new:    New;
-    index:  Index;
-    show:   Index;
-    status: Status;
-    init:   Init;
-    rel:    Rel;
+    config:     Config;
+    new:        New;
+    index:      Index;
+    show:       Index;
+    status:     Status;
+    init:       Init;
+    rel:        Rel;
+    suppressed: Rel;
 }
 
 export interface Config {
@@ -122,8 +128,11 @@ export interface ProgramMessages {
 
 export interface New {
     withAnswers:    WithAnswers;
-    withOutAnswers: WithOutAnswers;
+    WithOutAnswers: WithOutAnswers;
     program:        NewProgram;
+}
+
+export interface WithOutAnswers {
 }
 
 export interface NewProgram {
@@ -134,9 +143,6 @@ export interface NewProgram {
 export interface WithAnswers {
     shortTitle:         string;
     contextDescription: string;
-}
-
-export interface WithOutAnswers {
 }
 
 export interface Rel {
@@ -332,14 +338,18 @@ const typeMap: any = {
         { json: "adr", js: "adr", typ: r("Adr") },
     ], false),
     "Adr": o([
-        { json: "Add", js: "add", typ: r("Add") },
-        { json: "Adr", js: "adr", typ: r("AdrClass") },
+        { json: "Add", js: "Add", typ: r("Add") },
+        { json: "Adr", js: "Adr", typ: r("AdrClass") },
     ], false),
     "Add": o([
         { json: "checkContextValid", js: "checkContextValid", typ: "" },
     ], false),
     "AdrClass": o([
         { json: "validateOrCreateIndex", js: "validateOrCreateIndex", typ: r("ValidateOrCreateIndex") },
+        { json: "suppressedAdr", js: "suppressedAdr", typ: r("SuppressedAdr") },
+    ], false),
+    "SuppressedAdr": o([
+        { json: "okRanameAdrFile", js: "okRanameAdrFile", typ: "" },
     ], false),
     "ValidateOrCreateIndex": o([
         { json: "reading", js: "reading", typ: "" },
@@ -353,6 +363,7 @@ const typeMap: any = {
         { json: "status", js: "status", typ: r("Status") },
         { json: "init", js: "init", typ: r("Init") },
         { json: "rel", js: "rel", typ: r("Rel") },
+        { json: "suppressed", js: "suppressed", typ: r("Rel") },
     ], false),
     "Config": o([
         { json: "program", js: "program", typ: r("ConfigProgram") },
@@ -417,8 +428,10 @@ const typeMap: any = {
     ], false),
     "New": o([
         { json: "withAnswers", js: "withAnswers", typ: r("WithAnswers") },
-        { json: "WithOutAnswers", js: "withOutAnswers", typ: r("WithOutAnswers") },
+        { json: "WithOutAnswers", js: "WithOutAnswers", typ: r("WithOutAnswers") },
         { json: "program", js: "program", typ: r("NewProgram") },
+    ], false),
+    "WithOutAnswers": o([
     ], false),
     "NewProgram": o([
         { json: "descriptions", js: "descriptions", typ: "" },
@@ -427,8 +440,6 @@ const typeMap: any = {
     "WithAnswers": o([
         { json: "shortTitle", js: "shortTitle", typ: "" },
         { json: "contextDescription", js: "contextDescription", typ: "" },
-    ], false),
-    "WithOutAnswers": o([
     ], false),
     "Rel": o([
         { json: "program", js: "program", typ: r("RelProgram") },

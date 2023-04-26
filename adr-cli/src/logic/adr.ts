@@ -1,4 +1,4 @@
-import {readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync} from 'node:fs';
+import {readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync, rename} from 'node:fs';
 import {fileURLToPath} from 'node:url';
 import path from 'node:path';
 import chalk from 'chalk';
@@ -86,6 +86,21 @@ export class Adr {
         }
     }
 
+    public suppressedAdr(idToSupress: number, id: string[]): void {
+        const pathdir = `${pathBase}\\${this.pathAdr}`;
+        let nameFile: string = Utils.getFileNameById(idToSupress);
+        nameFile = `${pathdir}\\${nameFile}`;
+        console.log(nameFile);
+        const newNameFile = nameFile.replace('.md', '-suppressed.md');
+        console.log(newNameFile);
+        rename(nameFile, newNameFile, (err) => {
+            if (err) throw err;
+            console.log(chalk.greenBright.bold(this._locale.class.adr.Adr.suppressedAdr.okRanameAdrFile));
+          });
+        const status = new Status();
+        status.setStatusToAdr(idToSupress, 'superseding');
+        this.addRelationToAdr(idToSupress, id);
+    }
     //
     public addRelationToAdr(ids: number, idTo: string[]): void {
         const pathdir = `${pathBase}\\${this.pathAdr}`;
@@ -110,12 +125,12 @@ export class Adr {
 
     private validateOrCreateIndex(path: string, table: any): void {
         try {
-            console.log(chalk.green(this._locale.class.adr.adr.validateOrCreateIndex.reading));
+            console.log(chalk.green(this._locale.class.adr.Adr.validateOrCreateIndex.reading));
             const locale = config.get('locale');
             const templateIndedx = readFileSync(`${__dirname}\\..\\templates\\index-${locale}.md`, {encoding: 'utf8', flag: 'r'});
             const result = templateIndedx.replace(/<!--MakrToAppendFiles>/g, table);
             writeFileSync(`${path}\\index.md`, result, {mode: 0o777});
-            console.log(chalk.green(this._locale.class.adr.adr.validateOrCreateIndex.generated));
+            console.log(chalk.green(this._locale.class.adr.Adr.validateOrCreateIndex.generated));
         } catch (error: unknown) {
             console.error(chalk.red.bold(error));
             process.exit();
@@ -375,7 +390,7 @@ export class Add {
 
     private checkContextValid(string_: string) {
         if (this.isEmpty(string_)) {
-            return this._locale.class.adr.add.checkContextValid;
+            return this._locale.class.adr.Add.checkContextValid;
         }
 
         return string_;

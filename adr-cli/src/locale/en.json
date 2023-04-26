@@ -87,6 +87,13 @@
                 "argument": "ADR source id",
                 "option": "ADR Id to add to source ADR. To add many Id`s, add separate by comma."
             }
+        },
+        "suppressed": {
+            "program": {
+                "description": "Delete an ADR for another ADR/s",
+                "argument": "ADR Origin ID",
+                "option": "ADR ID to add to the source ADR. To add many Id`s add separated by comma."
+            }
         }
     },
     "class": {
@@ -98,6 +105,9 @@
                 "validateOrCreateIndex": {
                     "reading": "Reading ADR`s files to generated Index.",
                     "generated": "Index file generated successfully."
+                },
+                "suppressedAdr": {
+                    "okRanameAdrFile": "The file has been superseding successfully"
                 }
             }
         }

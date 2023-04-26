@@ -1,6 +1,11 @@
 # Roadmap
     ADR-CLI
 
+## Feature Version 1.2.2
+Version 1.2.1 se agregan nuevas funcionalidades, las cuales son las siguientes:
+
+- Suprimir o reemplazar una ADR por otra ADR por id.
+
 ## Feature Version 1.2.1
 Version 1.2.1 se agregan nuevas funcionalidades, las cuales son las siguientes:
 

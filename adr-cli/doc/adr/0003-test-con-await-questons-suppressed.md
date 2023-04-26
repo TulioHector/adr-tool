@@ -1,8 +1,8 @@
 # test con await questons
 
-* Status: $\color{DodgerBlue}{proposal}$
+* Status: $\color{Violet}{superseding}$
 * Date: 2022-10-13
-* Rel:
+* Rel: 0005,0006,0007
 
 ## Context and Problem Statement
 

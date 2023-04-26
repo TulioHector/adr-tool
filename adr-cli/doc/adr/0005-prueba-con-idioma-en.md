@@ -1,8 +1,8 @@
 # Prueba con idioma en
 
-* Status: $\color{DodgerBlue}{proposal}$
+* Status: $\color{Violet}{proposal}$
 * Date: 2022-10-13
-* Rel:
+* Rel: 0003
 
 ## Context and Problem Statement
 
