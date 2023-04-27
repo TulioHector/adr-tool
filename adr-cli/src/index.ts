@@ -46,7 +46,7 @@ program.command('new')
             const questions = await adr.getQuestionsToAdd();
             adr.addWithAnswers(questions);
         } else {
-            const data: any = {
+            const data: Record<string, string> = {
                 shortTitle: title,
             };
             adr.addWithoutAnswers(data);
