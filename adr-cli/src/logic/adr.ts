@@ -38,7 +38,7 @@ export class Adr {
         this._add.createFile(answers);
     }
 
-    public addWithoutAnswers(answers: any) {
+    public addWithoutAnswers(answers: Record<string, string>) {
         this._add.createFileImediatly(answers);
     }
 
@@ -93,15 +93,17 @@ export class Adr {
         console.log(nameFile);
         const newNameFile = nameFile.replace('.md', '-suppressed.md');
         console.log(newNameFile);
-        rename(nameFile, newNameFile, (err) => {
-            if (err) throw err;
+        rename(nameFile, newNameFile, error => {
+            if (error) {
+                throw error;
+            }
             console.log(chalk.greenBright.bold(this._locale.class.adr.Adr.suppressedAdr.okRanameAdrFile));
           });
         const status = new Status();
         status.setStatusToAdr(idToSupress, 'superseding');
         this.addRelationToAdr(idToSupress, id);
     }
-    //
+
     public addRelationToAdr(ids: number, idTo: string[]): void {
         const pathdir = `${pathBase}\\${this.pathAdr}`;
         let nameFile = Utils.getFileNameById(ids);
@@ -123,12 +125,13 @@ export class Adr {
         writeFileSync(nameFile, formatted, {mode: 0o777});
     }
 
-    private validateOrCreateIndex(path: string, table: any): void {
+    private validateOrCreateIndex(path: string, table: string): void {
         try {
             console.log(chalk.green(this._locale.class.adr.Adr.validateOrCreateIndex.reading));
             const locale = config.get('locale');
-            const templateIndedx = readFileSync(`${__dirname}\\..\\templates\\index-${locale}.md`, {encoding: 'utf8', flag: 'r'});
-            const result = templateIndedx.replace(/<!--MakrToAppendFiles>/g, table);
+            const templateIndedx: string = readFileSync(`${__dirname}\\..\\templates\\index-${locale}.md`, {encoding: 'utf8', flag: 'r'});
+            const search = /<!--MakrToAppendFiles>/g;
+            const result = templateIndedx.replace(search, table);
             writeFileSync(`${path}\\index.md`, result, {mode: 0o777});
             console.log(chalk.green(this._locale.class.adr.Adr.validateOrCreateIndex.generated));
         } catch (error: unknown) {

@@ -112,7 +112,7 @@ program
     .description(locale.command.suppressed.program.description)
     .argument('[id]', locale.command.suppressed.program.argument, adr.setDefaultRel, '0')
     .option('-b,--by <id_adr>', locale.command.suppressed.program.option)
-    .action(async (id:string, adrSuprim: Record<string, string>) => {
+    .action(async (id: string, adrSuprim: Record<string, string>) => {
         const sourceId = Number.parseInt(id, 10);
         const destinationId = adrSuprim.by.split(' ');
         console.log(sourceId, destinationId);
