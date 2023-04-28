@@ -87,14 +87,16 @@
             "program": {
                 "description": "Marcar relación ADR con otra/s ADR",
                 "argument": "ID de origen ADR",
-                "option": "Id/s ADR que reempla/n la ADR suprimida. Para agregar muchos Id`s, agregue separados por coma."
+                "option": "Id/s ADR que reempla/n la ADR suprimida. Para agregar muchos Id`s, agregue separados por coma.",
+                "argumentError": "Error en algun argumento, Los id deben ser numericos enteros."
             }
         },
         "suppressed": {
             "program": {
                 "description": "Suprimir una ADR por otro/s ADR",
                 "argument": "ID de origen ADR",
-                "option": "ID de ADR para agregar al ADR de origen. Para agregar muchos Id`s, agregue separados por coma."
+                "option": "ID de ADR para agregar al ADR de origen. Para agregar muchos Id`s, agregue separados por coma.",
+                "argumentError": "Error en algun argumento, Los id deben ser numericos enteros."
             }
         }
     },

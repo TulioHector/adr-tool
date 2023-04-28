@@ -104,6 +104,12 @@ program
     .action(async (id: string, adrToRelation: Record<string, string>) => {
         const sourceId = Number.parseInt(id, 10);
         const destinationId = adrToRelation.to.split(' ');
+        const isValidArray = destinationId.every((val) => Number.isInteger(Number.parseInt(val)));
+        const isValidId = Number.isInteger(sourceId);
+        if(!isValidArray || !isValidId) {
+            console.log(chalk.red(locale.command.rel.program.argumentError));
+            process.exit(1);
+        }
         adr.addRelationToAdr(sourceId, destinationId);
     });
 
@@ -115,7 +121,12 @@ program
     .action(async (id: string, adrSuprim: Record<string, string>) => {
         const sourceId = Number.parseInt(id, 10);
         const destinationId = adrSuprim.by.split(' ');
-        console.log(sourceId, destinationId);
+        const isValidArray = destinationId.every((val) => Number.isInteger(Number.parseInt(val)));
+        const isValidId = Number.isInteger(sourceId);
+        if(!isValidArray || !isValidId) {
+            console.log(chalk.red(locale.command.suppressed.program.argumentError));
+            process.exit(1);
+        }
         adr.suppressedAdr(sourceId, destinationId);
     });
 

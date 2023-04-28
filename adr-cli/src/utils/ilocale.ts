@@ -150,9 +150,10 @@ export interface Rel {
 }
 
 export interface RelProgram {
-    description: string;
-    argument:    string;
-    option:      string;
+    description:   string;
+    argument:      string;
+    option:        string;
+    argumentError: string;
 }
 
 export interface Status {
@@ -448,6 +449,7 @@ const typeMap: any = {
         { json: "description", js: "description", typ: "" },
         { json: "argument", js: "argument", typ: "" },
         { json: "option", js: "option", typ: "" },
+        { json: "argumentError", js: "argumentError", typ: "" },
     ], false),
     "Status": o([
         { json: "program", js: "program", typ: r("StatusProgram") },

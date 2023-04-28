@@ -90,9 +90,7 @@ export class Adr {
         const pathdir = `${pathBase}\\${this.pathAdr}`;
         let nameFile: string = Utils.getFileNameById(idToSupress);
         nameFile = `${pathdir}\\${nameFile}`;
-        console.log(nameFile);
         const newNameFile = nameFile.replace('.md', '-suppressed.md');
-        console.log(newNameFile);
         rename(nameFile, newNameFile, error => {
             if (error) {
                 throw error;
@@ -101,7 +99,14 @@ export class Adr {
           });
         const status = new Status();
         status.setStatusToAdr(idToSupress, 'superseding');
-        this.addRelationToAdr(idToSupress, id);
+        this.addSuppressingToAdr(idToSupress, id);
+    }
+
+    public addSuppressingToAdr(ids: number, idTo: string[]): void {
+        const pathdir = `${pathBase}\\${this.pathAdr}`;
+        let nameFile = Utils.getFileNameById(ids);
+        nameFile = `${pathdir}\\${nameFile}`;
+        this.addSuppressToAdr(nameFile, idTo);
     }
 
     public addRelationToAdr(ids: number, idTo: string[]): void {
@@ -115,6 +120,16 @@ export class Adr {
         return value;
     }
 
+    private addSuppressToAdr(nameFile: string, idTo: string[]): void {
+        const file = readFileSync(nameFile, {encoding: 'utf8', flag: 'r'});
+        const searchString = '* Rel:';
+        const re = new RegExp(`^.*\\${searchString}.*$`, 'gm');
+        const adrsIds = Array.from(idTo, x => x.padStart(4, '0'));
+        const text = `${searchString} \n* Suppressed by:  ${adrsIds.toString()}`;
+        const formatted = file.replace(re, text);
+        writeFileSync(nameFile, formatted, {mode: 0o777});
+    }
+    
     private addRelationsToAdr(nameFile: string, idTo: string[]): void {
         const file = readFileSync(nameFile, {encoding: 'utf8', flag: 'r'});
         const searchString = '* Rel:';

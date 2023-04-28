@@ -85,14 +85,16 @@
             "program": {
                 "description": "Mark relation ADR to other/s ADR",
                 "argument": "ADR source id",
-                "option": "ADR Id to add to source ADR. To add many Id`s, add separate by comma."
+                "option": "ADR Id to add to source ADR. To add many Id`s, add separate by comma.",
+                "argumentError": "Error in some argument, The id must be integer numbers."
             }
         },
         "suppressed": {
             "program": {
                 "description": "Delete an ADR for another ADR/s",
                 "argument": "ADR Origin ID",
-                "option": "ADR ID to add to the source ADR. To add many Id`s add separated by comma."
+                "option": "ADR ID to add to the source ADR. To add many Id`s add separated by comma.",
+                "argumentError": "Error in some argument, The id must be integer numbers."
             }
         }
     },

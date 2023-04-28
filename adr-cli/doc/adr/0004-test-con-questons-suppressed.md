@@ -1,8 +1,9 @@
 # Test con questons
 
-* Status: $\\color{Tomato}{rejection}$
+* Status: $\color{Violet}{superseding}$
 * Date: 2022-10-13
-* Rel:
+* Rel: 
+* Suppressed by:  0007
 
 ## Context and Problem Statement
 
