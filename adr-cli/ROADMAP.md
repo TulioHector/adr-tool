@@ -1,6 +1,11 @@
 # Roadmap
     ADR-CLI
 
+## Feature Version 1.2.3
+Version 1.2.1 corriguen, siguientes problemas:
+
+- Archiuvo y carpeta locale no encontrados.
+
 ## Feature Version 1.2.2
 Version 1.2.1 se agregan nuevas funcionalidades, las cuales son las siguientes:
 
