@@ -18,6 +18,6 @@ export class Enums {
         rejection: '$\\textcolor{Tomato}{\\text{rejection}}$',
         deprecation: '$\\textcolor{Orange}{\\text{deprecation}}$',
         superseding: '$\\textcolor{Violet}{\\text{superseding}}$',
-    }
+    };
 }
 export default Enums;

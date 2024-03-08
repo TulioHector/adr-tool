@@ -129,7 +129,7 @@ export class Adr {
         const formatted = file.replace(re, text);
         writeFileSync(nameFile, formatted, {mode: 0o777});
     }
-    
+
     private addRelationsToAdr(nameFile: string, idTo: string[]): void {
         const file = readFileSync(nameFile, {encoding: 'utf8', flag: 'r'});
         const searchString = '* Rel:';
@@ -157,6 +157,55 @@ export class Adr {
 }
 
 export class Status {
+    public static setStatusColor(status: string): string {
+        const typeOfMarkdown = config.get('markdownEngine');
+        if (typeOfMarkdown === 'github') {
+            switch (status) {
+                case 'proposed': {
+                    return `* Status: ${enums.statusColor.proposed}`;
+                }
+                case 'acceptance': {
+                    return `* Status: ${enums.statusColor.acceptance}`;
+                }
+                case 'rejection': {
+                    return `* Status: ${enums.statusColor.rejection}`;
+                }
+                case 'deprecation': {
+                    return `* Status: ${enums.statusColor.deprecation}`;
+                }
+                case 'superseding': {
+                    return `* Status: ${enums.statusColor.superseding}`;
+                }
+                default: {
+                    console.error(chalk.red('Error in status definitions.'));
+                    return 'false';
+                }
+            }
+        } else {
+            switch (status) {
+                case 'proposed': {
+                    return `* Status: ${enums.statusColorGitlab.proposed}`;
+                }
+                case 'acceptance': {
+                    return `* Status: ${enums.statusColorGitlab.acceptance}`;
+                }
+                case 'rejection': {
+                    return `* Status: ${enums.statusColorGitlab.rejection}`;
+                }
+                case 'deprecation': {
+                    return `* Status: ${enums.statusColorGitlab.deprecation}`;
+                }
+                case 'superseding': {
+                    return `* Status: ${enums.statusColorGitlab.superseding}`;
+                }
+                default: {
+                    console.error(chalk.red('Error in status definitions.'));
+                    return 'false';
+                }
+            }
+        }
+    }
+
     private readonly pathAdr = config.get('adrPath');
     private readonly _adr = new Adr();
 
@@ -236,56 +285,6 @@ export class Status {
         }
 
         return matchedFiles;
-    }
-
-    public static setStatusColor(status: string): string {
-        const typeOfMarkdown = config.get('markdownEngine');
-        if(typeOfMarkdown === 'github') {
-            switch (status) {
-                case 'proposed': {
-                    return `* Status: ${enums.statusColor.proposed}`;
-                }
-                case 'acceptance': {
-                    return `* Status: ${enums.statusColor.acceptance}`;
-                }
-                case 'rejection': {
-                    return `* Status: ${enums.statusColor.rejection}`;
-                }
-                case 'deprecation': {
-                    return `* Status: ${enums.statusColor.deprecation}`;
-                }
-                case 'superseding': {
-                    return `* Status: ${enums.statusColor.superseding}`;
-                }
-                default: {
-                    console.error(chalk.red('Error in status definitions.'));
-                    return 'false';
-                }
-            }
-        }else {
-            switch (status) {
-                case 'proposed': {
-                    return `* Status: ${enums.statusColorGitlab.proposed}`;
-                }
-                case 'acceptance': {
-                    return `* Status: ${enums.statusColorGitlab.acceptance}`;
-                }
-                case 'rejection': {
-                    return `* Status: ${enums.statusColorGitlab.rejection}`;
-                }
-                case 'deprecation': {
-                    return `* Status: ${enums.statusColorGitlab.deprecation}`;
-                }
-                case 'superseding': {
-                    return `* Status: ${enums.statusColorGitlab.superseding}`;
-                }
-                default: {
-                    console.error(chalk.red('Error in status definitions.'));
-                    return 'false';
-                }
-            }
-        }
-        
     }
 }
 

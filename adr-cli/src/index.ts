@@ -104,9 +104,9 @@ program
     .action(async (id: string, adrToRelation: Record<string, string>) => {
         const sourceId = Number.parseInt(id, 10);
         const destinationId = adrToRelation.to.split(' ');
-        const isValidArray = destinationId.every((val) => Number.isInteger(Number.parseInt(val)));
+        const isValidArray = destinationId.every(value => Number.isInteger(Number.parseInt(value, 10)));
         const isValidId = Number.isInteger(sourceId);
-        if(!isValidArray || !isValidId) {
+        if (!isValidArray || !isValidId) {
             console.log(chalk.red(locale.command.rel.program.argumentError));
             process.exit(1);
         }
@@ -121,9 +121,9 @@ program
     .action(async (id: string, adrSuprim: Record<string, string>) => {
         const sourceId = Number.parseInt(id, 10);
         const destinationId = adrSuprim.by.split(' ');
-        const isValidArray = destinationId.every((val) => Number.isInteger(Number.parseInt(val)));
+        const isValidArray = destinationId.every(value => Number.isInteger(Number.parseInt(value, 10)));
         const isValidId = Number.isInteger(sourceId);
-        if(!isValidArray || !isValidId) {
+        if (!isValidArray || !isValidId) {
             console.log(chalk.red(locale.command.suppressed.program.argumentError));
             process.exit(1);
         }
