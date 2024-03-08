@@ -1,10 +1,7 @@
 import fetch from 'isomorphic-fetch';
+import IAPI, { IFile, FileResponse } from './IAPI';
 
-interface IFile {
-  content: string;
-}
-
-class GitHubAPI {
+class GitHubAPI implements IAPI {
   private token: string;
   private baseUrl: string;
 
@@ -32,7 +29,7 @@ class GitHubAPI {
   }
 
   async getRepositoryContents(owner: string, repo: string, path: string) {
-    const url = `${this.baseUrl}/repos/${owner}/${repo}/contents/${path}`;    
+    const url = `${this.baseUrl}/repos/${owner}/${repo}/contents/${path}`;
     const response = await this._fetch(url);
     if (!response.ok) {
       throw new Error(response.statusText);
@@ -52,6 +49,26 @@ class GitHubAPI {
     return {
       content: fileContent,
     };
+  }
+
+  async getFilesADR(owner: string, repo: string, path: string): Promise<ADR[]> {
+    const url = `${this.baseUrl}/repos/${owner}/${repo}/contents/${path}`;
+    const response = await this._fetch(url);
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+    const data = await response.json();
+    const markdownFiles = data.filter((file: any) => file.type === 'file' && file.name.endsWith('.md'));
+    const fileContentPromises = markdownFiles.map(async (file: any) => {
+      const contentRes = await fetch(file.download_url);
+      const content = await contentRes.text();
+      return {
+        title: file.name,
+        content,
+      };
+    });
+    const fileContents = await Promise.all(fileContentPromises);
+    return fileContents;
   }
 
   async _fetch(url: string) {

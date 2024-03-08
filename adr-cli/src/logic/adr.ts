@@ -202,7 +202,7 @@ export class Status {
         const file = readFileSync(fileName, {encoding: 'utf8', flag: 'r'});
         const searchString = '* Status:';
         const re = new RegExp(`^.*\\${searchString}.*$`, 'gm');
-        const colorStatus = this.setStatusColor(status);
+        const colorStatus = Status.setStatusColor(status);
         const formatted = file.replace(re, colorStatus);
         writeFileSync(fileName, formatted, {mode: 0o777});
     }
@@ -238,28 +238,54 @@ export class Status {
         return matchedFiles;
     }
 
-    private setStatusColor(status: string): string {
-        switch (status) {
-            case 'proposed': {
-                return `* Status: ${enums.statusColor.proposed}`;
+    public static setStatusColor(status: string): string {
+        const typeOfMarkdown = config.get('markdownEngine');
+        if(typeOfMarkdown === 'github') {
+            switch (status) {
+                case 'proposed': {
+                    return `* Status: ${enums.statusColor.proposed}`;
+                }
+                case 'acceptance': {
+                    return `* Status: ${enums.statusColor.acceptance}`;
+                }
+                case 'rejection': {
+                    return `* Status: ${enums.statusColor.rejection}`;
+                }
+                case 'deprecation': {
+                    return `* Status: ${enums.statusColor.deprecation}`;
+                }
+                case 'superseding': {
+                    return `* Status: ${enums.statusColor.superseding}`;
+                }
+                default: {
+                    console.error(chalk.red('Error in status definitions.'));
+                    return 'false';
+                }
             }
-            case 'acceptance': {
-                return `* Status: ${enums.statusColor.acceptance}`;
-            }
-            case 'rejection': {
-                return `* Status: ${enums.statusColor.rejection}`;
-            }
-            case 'deprecation': {
-                return `* Status: ${enums.statusColor.deprecation}`;
-            }
-            case 'superseding': {
-                return `* Status: ${enums.statusColor.superseding}`;
-            }
-            default: {
-                console.error(chalk.red('Error in status definitions.'));
-                return 'false';
+        }else {
+            switch (status) {
+                case 'proposed': {
+                    return `* Status: ${enums.statusColorGitlab.proposed}`;
+                }
+                case 'acceptance': {
+                    return `* Status: ${enums.statusColorGitlab.acceptance}`;
+                }
+                case 'rejection': {
+                    return `* Status: ${enums.statusColorGitlab.rejection}`;
+                }
+                case 'deprecation': {
+                    return `* Status: ${enums.statusColorGitlab.deprecation}`;
+                }
+                case 'superseding': {
+                    return `* Status: ${enums.statusColorGitlab.superseding}`;
+                }
+                default: {
+                    console.error(chalk.red('Error in status definitions.'));
+                    return 'false';
+                }
             }
         }
+        
     }
 }
 
@@ -312,6 +338,7 @@ export class Add {
             this.templateAdr = this.templateAdr.replace('$shortTitle', data.shortTitle);
             const date = moment().format('YYYY-MM-DD hh:mm:ss');
             this.templateAdr = this.templateAdr.replace('$dateAdr', date);
+            this.templateAdr = this.templateAdr.replace('$statusAdr', Status.setStatusColor('proposed'));
             this.templateAdr = this.templateAdr.replace('$contextDescription', this.checkContextValid(data.contextDescription));
             writeFileSync(file, this.templateAdr, {mode: 0o777});
         } catch (error: unknown) {
@@ -353,6 +380,7 @@ export class Add {
             this.templateAdr = this.templateAdr.replace('$shortTitle', data.shortTitle);
             const date = moment().format('YYYY-MM-DD hh:mm:ss');
             this.templateAdr = this.templateAdr.replace('$dateAdr', date);
+            this.templateAdr = this.templateAdr.replace('$statusAdr', Status.setStatusColor('proposed'));
             this.templateAdr = this.templateAdr.replace('$contextDescription', this.checkContextValid(''));
             writeFileSync(file, this.templateAdr, {mode: 0o777});
         } catch (error: unknown) {

@@ -24,9 +24,16 @@ function Sidebar() {
               </Link>
             </li>
             <li className="nav-item">
-              <Link href="/repos">
+              <Link href="/treeview">
                 <span className="nav-link">
-                  <i className="bi bi-folder"></i> Repositorios
+                  <i className="bi bi-folder"></i> Tree View
+                </span>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link href="/timeline">
+                <span className="nav-link">
+                  <i className="bi bi-folder"></i> Timeline View
                 </span>
               </Link>
             </li>

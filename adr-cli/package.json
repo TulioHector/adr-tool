@@ -57,7 +57,8 @@
     "dist/logic",
     "dist/utils",
     "dist/templates",
-    "dist/config"
+    "dist/config",
+    "dist/locale"
   ],
   "devDependencies": {
     "@types/figlet": "^1.5.5",

@@ -1,12 +1,12 @@
-# $shortTitle
+# engine markdown gitlab
 
-$statusAdr
-* Date: $dateAdr
+* Status: $\textcolor{MediumSeaGreen}{\text{acceptance}}$
+* Date: 2023-05-02 02:43:32
 * Rel:
 
 ## Context and Problem Statement
 
-$contextDescription
+{Describe the context and problem statement, e.g., in free form using two to three sentences or in the form of an illustrative story. You may want to articulate the problem in form of a question and add links to collaboration boards or issue management systems.}
 
 
 <!-- This is an optional element. Feel free to remove. -->

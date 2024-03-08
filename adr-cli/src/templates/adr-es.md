@@ -1,6 +1,6 @@
 # $shortTitle
 
-* Status: $\color{DodgerBlue}{proposal}$
+$statusAdr
 * Date: $dateAdr
 * Rel:
 

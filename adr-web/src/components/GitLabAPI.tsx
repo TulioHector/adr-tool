@@ -1,6 +1,7 @@
 import fetch from 'isomorphic-fetch';
+import IAPI, {IFile } from './IAPI';
 
-class GitLabAPI {
+class GitLabAPI implements IAPI{
   private token: string;
   private baseUrl: string;
 
@@ -29,12 +30,27 @@ class GitLabAPI {
   }
 
   async getRepositoryContents(owner: string, repo: string, path: string) {
-    const url = `${this.baseUrl}/projects/${owner}%2F${repo}/repository/tree?path=${path}&ref=master`;
+    const url = `${this.baseUrl}/projects/${owner}/${repo}/repository/tree?path=${path}&ref=master`;
     const response = await this._fetch(url);
     if (!response.ok) {
       throw new Error(response.statusText);
     }
+    console.log("response->", response);
     return await response.json();
+  }
+
+  async getFileContent(url: string): Promise<IFile | null> {
+    const API_BASE_URL = `https://cors-anywhere.herokuapp.com/${url}`;
+    console.log("API_BASE_URL", API_BASE_URL);
+    const response = await this._fetch(API_BASE_URL);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const fileContent = await response.text();
+
+    return {
+      content: fileContent,
+    };
   }
 
   async _fetch(url: string) {

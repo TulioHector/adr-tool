@@ -11,5 +11,13 @@ export class Enums {
         github: 'github',
         gitlab: 'gitlab',
     };
+
+    public statusColorGitlab = {
+        proposed: '$\\textcolor{DodgerBlue}{\\text{proposed}}$',
+        acceptance: '$\\textcolor{MediumSeaGreen}{\\text{acceptance}}$',
+        rejection: '$\\textcolor{Tomato}{\\text{rejection}}$',
+        deprecation: '$\\textcolor{Orange}{\\text{deprecation}}$',
+        superseding: '$\\textcolor{Violet}{\\text{superseding}}$',
+    }
 }
 export default Enums;
