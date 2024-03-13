@@ -63,16 +63,16 @@ program
     .command('show')
     .description(locale.command.show.program.descriptions)
     .action(() => {
-        const dir: string = config.get('adrPath');
-        directory.displayDirectory(dir);
+        const _directory: string = config.get('adrPath');
+        directory.displayDirectory(_directory);
     });
 
 program
     .command('init')
     .description(locale.command.init.program.description)
     .action(() => {
-        const dir: string = config.get('adrPath');
-        const result: boolean = directory.initDirectory(dir);
+        const _directory: string = config.get('adrPath');
+        const result: boolean = directory.initDirectory(_directory);
         if (result) {
             console.log(chalk.redBright.bold(locale.command.init.program.messages.successfully));
         } else {
@@ -161,10 +161,10 @@ configCmd
     .action((name: string | undefined) => {
         if (name !== undefined) {
             const parsePropertie: string[] = name.split('=');
-            const prop: Record<string, any> = {};
-            prop[parsePropertie[0]] = parsePropertie[1];
+            const property: Record<string, any> = {};
+            property[parsePropertie[0]] = parsePropertie[1];
 
-            const chk = Schemas.validateConfigSchema(prop);
+            const chk = Schemas.validateConfigSchema(property);
             if (!chk) {
                 const messages: string = locale.command.config.set.messages.propertyEntered.replace('$parseProperty', parsePropertie[0]);
                 console.log(chalk.greenBright.bold(messages));
@@ -172,8 +172,8 @@ configCmd
             }
 
             config.set(parsePropertie[0], parsePropertie[1]);
-            const newProp = config.get(parsePropertie[0]);
-            console.log(chalk.greenBright.bold(locale.command.config.set.messages.propertyChanged.replace('${parsePropertie[0]}', parsePropertie[0]).replace('${newProp}', newProp)));
+            const newProperty = config.get(parsePropertie[0]);
+            console.log(chalk.greenBright.bold(locale.command.config.set.messages.propertyChanged.replace('${parsePropertie[0]}', parsePropertie[0]).replace('${newProp}', newProperty)));
             process.exit(1);
         }
 

@@ -21,14 +21,14 @@ export class Directory {
         return 'status not found';
     }
 
-    public getMostRecentFile(dir: string) {
-        const files = this.orderReccentFiles(dir);
+    public getMostRecentFile(directory: string) {
+        const files = this.orderReccentFiles(directory);
         return files.length > 0 ? files : [];
     }
 
-    public orderReccentFiles(dir: string): string[] {
+    public orderReccentFiles(directory: string): string[] {
         const arrayFiles: string[] = [];
-        const files = readdirSync(dir);
+        const files = readdirSync(directory);
         for (const file of files) {
             arrayFiles.push(file);
         }
@@ -36,11 +36,11 @@ export class Directory {
         return arrayFiles;
     }
 
-    public displayDirectory(dir: string) {
+    public displayDirectory(directory: string) {
         const tableFiles = new Table({
             head: ['Id', 'File Name', 'Status'],
         });
-        const path = `${pathBase}\\${dir}`;
+        const path = `${pathBase}\\${directory}`;
         const lastAdrCreate: string[] = this.getMostRecentFile(path);
         for (const file of lastAdrCreate) {
             const statusAdr = Directory.getStatusForAdr(file, path);
@@ -60,9 +60,9 @@ export class Directory {
         console.log(tableFiles.toString());
     }
 
-    public initDirectory(dir: string): boolean {
-        if (!existsSync(dir)) {
-            mkdirSync(dir, {recursive: true});
+    public initDirectory(directory: string): boolean {
+        if (!existsSync(directory)) {
+            mkdirSync(directory, {recursive: true});
             return true;
         }
         return false;

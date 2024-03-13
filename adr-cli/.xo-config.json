@@ -4,6 +4,9 @@
         "n/prefer-global/process": 0,
         "unicorn/no-process-exit": 0,
         "@typescript-eslint/padding-line-between-statements": 0,
-        "no-template-curly-in-string": 0
+        "no-template-curly-in-string": 0,
+        "object-curly-newline": 0,
+        "unicorn/prefer-string-replace-all": 0,
+        "unicorn/prefer-at": 0
       }
 }
